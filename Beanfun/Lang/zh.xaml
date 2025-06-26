@@ -40,7 +40,6 @@
     <system:String x:Key="Contact">聯繫開發者</system:String>
     <system:String x:Key="Email">發送電郵</system:String>
     <system:String x:Key="Back">返回</system:String>
-    <system:String x:Key="Donate">捐贈</system:String>
     <system:String x:Key="Feedback">繽放 反饋/建議</system:String>
     <system:String x:Key="FeedbackText">軟體版本: {0}%0d反饋/建議訊息:%0d</system:String>
     <system:String x:Key="AccountList">帳號選單</system:String>
@@ -69,7 +68,12 @@
     <system:String x:Key="GetOtpFailed">獲取密碼失敗</system:String>
     <system:String x:Key="GetOtpSuccessAndCopy">密碼獲取成功，已複製。</system:String>
     <system:String x:Key="AutoPaste">自動輸入</system:String>
-    <system:String x:Key="AutoPasteTip">自動輸入需要遊戲在輸入帳密界面&#x0a;&#x0a;※ 自動輸入功能可能會由於遊戲限制出現偶爾無法正常進行的問題, 請斟酌使用</system:String>
+    <TextBlock x:Key="AutoPasteTip" TextWrapping="Wrap">
+        <Run Text="自動輸入需要遊戲在輸入帳密界面"/>
+        <LineBreak/>
+        <LineBreak/>
+        <Run Text="※ 自動輸入功能可能會由於遊戲限制出現偶爾無法正常進行的問題, 請斟酌使用"/>
+    </TextBlock>
     <system:String x:Key="ClickToCopy">點擊自動複製</system:String>
     <system:String x:Key="LogoutConfirm">即將登出，是否要繼續？</system:String>
     <system:String x:Key="MsgSelectAccount">您還未選擇需要啟動遊戲的帳號。</system:String>
@@ -118,11 +122,23 @@
     <system:String x:Key="Game">遊戲</system:String>
     <system:String x:Key="GamePath">遊戲路徑</system:String>
     <system:String x:Key="TraditionalLoginMode">傳統登入模式</system:String>
-    <system:String x:Key="TraditionalLoginModeTip">部分遊戲支援手動使用一次性密碼登入&#x0a;點選此選項後可獲取一次性密碼用以傳統登入</system:String>
+    <TextBlock x:Key="TraditionalLoginModeTip" TextWrapping="Wrap">
+        <Run Text="部分遊戲支援手動使用一次性密碼登入"/>
+        <LineBreak/>
+        <Run Text="點選此選項後可獲取一次性密碼用以傳統登入"/>
+    </TextBlock>
     <system:String x:Key="KillPatcher">阻止自動更新</system:String>
-    <system:String x:Key="KillPatcherTip">自動阻止遊戲自動更新來防止更新造成的遊戲檔案損壞&#x0a;※僅支援遊戲「新楓之谷」</system:String>
+    <TextBlock x:Key="KillPatcherTip" TextWrapping="Wrap">
+        <Run Text="自動阻止遊戲自動更新來防止更新造成的遊戲檔案損壞"/>
+        <LineBreak/>
+        <Run Text="※僅支援遊戲「新楓之谷」"/>
+    </TextBlock>
     <system:String x:Key="SkipPlayWindow">跳過Play視窗</system:String>
-    <system:String x:Key="SkipPlayWindowTip">跳過Play視窗的等待直接啟動遊戲&#x0a;※僅支援遊戲「新楓之谷」</system:String>
+    <TextBlock x:Key="SkipPlayWindowTip" TextWrapping="Wrap">
+        <Run Text="跳過Play視窗的等待直接啟動遊戲"/>
+        <LineBreak/>
+        <Run Text="※僅支援遊戲「新楓之谷」"/>
+    </TextBlock>
     <system:String x:Key="AuthInfoNeed">請輸入進階驗證資訊</system:String>
     <system:String x:Key="Remember">記住</system:String>
     <system:String x:Key="YourAuthInfoTip">提示您進階驗證資料為：</system:String>
@@ -163,10 +179,6 @@
     <system:String x:Key="Copy">複製</system:String>
     <system:String x:Key="CopyFinished">複製完成</system:String>
     <system:String x:Key="CopyFailed">複製失敗</system:String>
-    <system:String x:Key="DonateText">&lt;R&gt;感謝使用 繽放！&lt;L/&gt;&lt;L/&gt;繽放 目前是免費開源軟體，沒有廣告，也沒有任何功能限制。&lt;L/&gt;&lt;L/&gt;如果 繽放 幫助您改善了遊戲體驗，請考慮捐贈。&lt;L/&gt;&lt;L/&gt;您的捐贈會支持我不斷地改進它，讓它成為更優秀有效率的工具。&lt;L/&gt;&lt;L/&gt;感謝您的支持！❤&lt;L/&gt;&lt;L/&gt;&lt;/R&gt;</system:String>
-    <system:String x:Key="Alipay">支付寶</system:String>
-    <system:String x:Key="QQPay">QQ支付</system:String>
-    <system:String x:Key="WechatPay">微信支付</system:String>
     <system:String x:Key="EquipStarForceCaculator">裝備卷軸星力計算器</system:String>
     <system:String x:Key="EquipType">裝備分類:</system:String>
     <system:String x:Key="Weapon">武器</system:String>

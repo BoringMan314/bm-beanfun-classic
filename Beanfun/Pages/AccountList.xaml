@@ -114,7 +114,11 @@
                     </Grid>
                     <DockPanel x:Name="panel_GetOtp" Margin="0,10,0,0">
                         <Button x:Name="btnGetOtp" Content="{DynamicResource GetOtp}" IsDefault="True" Click="btnGetOtp_Click"/>
-                        <CheckBox x:Name="autoPaste" Content="{DynamicResource AutoPaste}" VerticalAlignment="Center" Margin="5,0,0,0" Checked="autoPaste_CheckedChanged" Unchecked="autoPaste_CheckedChanged" IsChecked="False" ToolTip="{DynamicResource AutoPasteTip}" Cursor="Help"/>
+                        <CheckBox x:Name="autoPaste" Content="{DynamicResource AutoPaste}" VerticalAlignment="Center" Margin="5,0,0,0" Checked="autoPaste_CheckedChanged" Unchecked="autoPaste_CheckedChanged" IsChecked="False" Cursor="Help">
+                            <CheckBox.ToolTip>
+                                <ContentControl Content="{DynamicResource AutoPasteTip}" />
+                            </CheckBox.ToolTip>
+                        </CheckBox>
                         <TextBox x:Name="t_Password" Margin="5,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Center" IsReadOnly="True" MinWidth="160" ToolTip="{DynamicResource ClickToCopy}" TextAlignment="Center" PreviewMouseLeftButtonDown="t_Password_PreviewMouseLeftButtonDown"/>
                     </DockPanel>
                 </StackPanel>

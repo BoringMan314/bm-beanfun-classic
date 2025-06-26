@@ -45,7 +45,6 @@
     <system:String x:Key="AboutText">&lt;R&gt;本程序&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;游戏橘子数位科技&lt;/B&gt;开发的官方客户端程序&lt;L/&gt;&lt;L/&gt;关于游戏账号使用第三方的方式登录请再三斟酌并且请确认您下载当前程序的途径是否安全&lt;L/&gt;&lt;L/&gt;程序使用部分BeanfunLogin的代码&lt;L/&gt;&lt;/R&gt;</system:String>
     <system:String x:Key="Contact">联系开发者</system:String>
     <system:String x:Key="Email">发送邮件</system:String>
-    <system:String x:Key="Donate">捐赠</system:String>
     <system:String x:Key="Feedback">缤放 反馈/建议</system:String>
     <system:String x:Key="FeedbackText">软件版本: {0}%0d反馈/建议信息:%0d</system:String>
     <system:String x:Key="AccountList">帐号列表</system:String>
@@ -71,7 +70,12 @@
     <system:String x:Key="GetOtpFailed">获取密码失败</system:String>
     <system:String x:Key="GetOtpSuccessAndCopy">密码获取成功，已复制。</system:String>
     <system:String x:Key="AutoPaste">自动输入</system:String>
-    <system:String x:Key="AutoPasteTip">自动输入需要游戏在输入账密界面&#x0a;&#x0a;※ 自动输入功能可能会由于游戏限制出现偶尔无法正常运行的问题, 请斟酌使用</system:String>
+    <TextBlock x:Key="AutoPasteTip" TextWrapping="Wrap">
+        <Run Text="自动输入需要游戏在输入账密界面"/>
+        <LineBreak/>
+        <LineBreak/>
+        <Run Text="※ 自动输入功能可能会由于游戏限制出现偶尔无法正常运行的问题, 请斟酌使用"/>
+    </TextBlock>
     <system:String x:Key="ClickToCopy">点击自动复制</system:String>
     <system:String x:Key="LogoutConfirm">即将登出，是否要继续？</system:String>
     <system:String x:Key="MsgSelectAccount">您还未选择需要启动游戏的账号。</system:String>
@@ -115,11 +119,23 @@
     <system:String x:Key="Game">游戏</system:String>
     <system:String x:Key="GamePath">游戏路径</system:String>
     <system:String x:Key="TraditionalLoginMode">传统登录模式</system:String>
-    <system:String x:Key="TraditionalLoginModeTip">部分游戏支持手动使用一次性密码登录&#x0a;勾选此选项后可获取一次性密码用以传统登录</system:String>
+    <TextBlock x:Key="TraditionalLoginModeTip" TextWrapping="Wrap">
+        <Run Text="部分游戏支持手动使用一次性密码登录"/>
+        <LineBreak/>
+        <Run Text="勾选此选项后可获取一次性密码用以传统登录"/>
+    </TextBlock>
     <system:String x:Key="KillPatcher">阻止自动更新</system:String>
-    <system:String x:Key="KillPatcherTip">自动阻止游戏自动更新来防止更新造成的游戏文件损坏&#x0a;※仅支持游戏「新枫之谷」</system:String>
+    <TextBlock x:Key="KillPatcherTip" TextWrapping="Wrap">
+        <Run Text="自动阻止游戏自动更新来防止更新造成的游戏文件损坏"/>
+        <LineBreak/>
+        <Run Text="※仅支持游戏「新枫之谷」"/>
+    </TextBlock>
     <system:String x:Key="SkipPlayWindow">跳过Play窗口</system:String>
-    <system:String x:Key="SkipPlayWindowTip">跳过Play窗口的等待直接启动游戏&#x0a;※仅支持游戏「新枫之谷」</system:String>
+    <TextBlock x:Key="SkipPlayWindowTip" TextWrapping="Wrap">
+        <Run Text="跳过Play窗口的等待直接启动游戏"/>
+        <LineBreak/>
+        <Run Text="※仅支持游戏「新枫之谷」"/>
+    </TextBlock>
     <system:String x:Key="AuthInfoNeed">请输入进阶验证信息</system:String>
     <system:String x:Key="Remember">记住</system:String>
     <system:String x:Key="YourAuthInfoTip">提示您进阶验证资料为：</system:String>
@@ -159,8 +175,6 @@
     <system:String x:Key="Copy">复制</system:String>
     <system:String x:Key="CopyFinished">复制完成</system:String>
     <system:String x:Key="CopyFailed">复制失败</system:String>
-    <system:String x:Key="DonateText">&lt;R&gt;感谢使用 缤放！&lt;L/&gt;&lt;L/&gt;缤放 目前是免费开源软件，没有广告，也没有任何功能限制。&lt;L/&gt;&lt;L/&gt;如果 缤放 帮助您改善了游戏体验，请考虑捐赠。&lt;L/&gt;&lt;L/&gt;您的捐赠会支持我不断地改进它，让它成为更游戏有效率的工具。&lt;L/&gt;&lt;L/&gt;感谢您的支持！❤&lt;L/&gt;&lt;L/&gt;&lt;/R&gt;</system:String>
-    <system:String x:Key="Alipay">支付宝</system:String>
     <system:String x:Key="EquipStarForceCaculator">装备卷轴星力计算器</system:String>
     <system:String x:Key="EquipType">装备分类:</system:String>
     <system:String x:Key="Accessory">饰品</system:String>

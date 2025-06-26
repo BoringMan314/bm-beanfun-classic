@@ -81,11 +81,23 @@
                     </DockPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
-                            <CheckBox x:Name="tradLogin" Margin="2" Content="{DynamicResource TraditionalLoginMode}" Checked="tradLogin_CheckedChanged" Unchecked="tradLogin_CheckedChanged" IsChecked="True" ToolTip="{DynamicResource TraditionalLoginModeTip}" Cursor="Help"/>
-                            <CheckBox x:Name="autoKillPatcher" Margin="2" Content="{DynamicResource KillPatcher}" Checked="autoKillPatcher_CheckedChanged" Unchecked="autoKillPatcher_CheckedChanged" IsChecked="True" ToolTip="{DynamicResource KillPatcherTip}" Cursor="Help"></CheckBox>
+                            <CheckBox x:Name="tradLogin" Margin="2" Content="{DynamicResource TraditionalLoginMode}" Checked="tradLogin_CheckedChanged" Unchecked="tradLogin_CheckedChanged" IsChecked="True" Cursor="Help">
+                                <CheckBox.ToolTip>
+                                    <ContentControl Content="{DynamicResource TraditionalLoginModeTip}" />
+                                </CheckBox.ToolTip>
+                            </CheckBox>
+                            <CheckBox x:Name="autoKillPatcher" Margin="2" Content="{DynamicResource KillPatcher}" Checked="autoKillPatcher_CheckedChanged" Unchecked="autoKillPatcher_CheckedChanged" IsChecked="True" Cursor="Help">
+                                <CheckBox.ToolTip>
+                                    <ContentControl Content="{DynamicResource KillPatcherTip}" />
+                                </CheckBox.ToolTip>
+                            </CheckBox>
                         </StackPanel>
                         <StackPanel>
-                            <CheckBox x:Name="skipPlayWnd" Margin="2" Content="{DynamicResource SkipPlayWindow}" Checked="skipPlayWnd_CheckedChanged" Unchecked="skipPlayWnd_CheckedChanged" IsChecked="True" ToolTip="{DynamicResource SkipPlayWindowTip}" Cursor="Help"/>
+                            <CheckBox x:Name="skipPlayWnd" Margin="2" Content="{DynamicResource SkipPlayWindow}" Checked="skipPlayWnd_CheckedChanged" Unchecked="skipPlayWnd_CheckedChanged" IsChecked="True" Cursor="Help">
+                                <CheckBox.ToolTip>
+                                    <ContentControl Content="{DynamicResource SkipPlayWindowTip}" />
+                                </CheckBox.ToolTip>
+                            </CheckBox>
                             <Button x:Name="btn_Tools" Content="{DynamicResource Tools}" Margin="2" Click="btn_Tools_Click"/>
                         </StackPanel>
                     </StackPanel>

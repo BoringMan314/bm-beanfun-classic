@@ -239,9 +239,6 @@
     <Compile Include="Windows\AddAccount.xaml.cs">
       <DependentUpon>AddAccount.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Donate.xaml.cs">
-      <DependentUpon>Donate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ManageAccount.xaml.cs">
       <DependentUpon>ManageAccount.xaml</DependentUpon>
     </Compile>
@@ -350,10 +347,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddAccount.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\Donate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -490,10 +483,6 @@
     <Resource Include="Resources\refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\QRCode_WeChat.png" />
-    <Resource Include="Resources\QRCode_Alipay.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Scroll_Black.png" />
   </ItemGroup>
   <ItemGroup>
@@ -516,9 +505,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Scroll_SM.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\QRCode_QQPay.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\QRCode_Tip.png" />

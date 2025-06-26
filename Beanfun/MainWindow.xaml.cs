@@ -610,7 +610,6 @@ namespace Beanfun
                 {
                     string json = reg.Match(res).Groups[1].Value;
                     bool newJson = new Regex("^\\[(.*)\\]$").IsMatch(json);
-                    Console.WriteLine(json);
                     if (newJson)
                     {
                         JArray jsons = JArray.Parse(json);

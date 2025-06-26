@@ -25,12 +25,6 @@ namespace Beanfun
             version.Foreground = brush;
         }
 
-        private void Donate_Click(object sender, RoutedEventArgs e)
-        {
-            Donate wnd = new Donate();
-            wnd.ShowDialog();
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (App.MainWnd == null) return;
