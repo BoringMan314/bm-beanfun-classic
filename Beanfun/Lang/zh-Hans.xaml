@@ -47,7 +47,7 @@
   <system:String x:Key="Close">关闭</system:String>
   <system:String x:Key="CheckUpdate">检测更新</system:String>
   <system:String x:Key="AboutText"
-    >&lt;R&gt;本程序&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;游戏橘子数位科技&lt;/B&gt;开发的官方客户端程序&lt;L/&gt;&lt;L/&gt;关于游戏账号使用第三方的方式登录请再三斟酌并且请确认您下载当前程序的途径是否安全&lt;L/&gt;&lt;L/&gt;程序使用部分BeanfunLogin的代码&lt;L/&gt;&lt;/R&gt;</system:String
+    >&lt;R&gt;本程序&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;游戏橘子数位科技&lt;/B&gt;开发的官方客户端程序&lt;L/&gt;&lt;L/&gt;关于游戏账号使用第三方的方式登录请再三斟酌并且请确认您下载当前程序的途径是否安全&lt;L/&gt;&lt;L/&gt;Beanfun 经典 UI — 旧版界面维护分支&lt;L/&gt;&lt;/R&gt;</system:String
   >
   <system:String x:Key="Contact">联系开发者</system:String>
   <system:String x:Key="Email">发送邮件</system:String>

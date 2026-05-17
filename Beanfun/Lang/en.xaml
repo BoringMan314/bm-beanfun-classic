@@ -56,7 +56,7 @@
   <system:String x:Key="Version">Version</system:String>
   <system:String x:Key="CheckUpdate">Check for Updates</system:String>
   <system:String x:Key="AboutText"
-    >&lt;R&gt;This application is &lt;B&gt;&lt;R Foreground="Red"&gt;NOT&lt;/R&gt; an official client developed by Gamania Digital Entertainment&lt;/B&gt;.&lt;L/&gt;&lt;L/&gt;Please think carefully before using a third-party tool to log in to your game account, and make sure you downloaded this program from a trusted source.&lt;L/&gt;&lt;L/&gt;This program uses parts of BeanfunLogin's code.&lt;L/&gt;&lt;/R&gt;</system:String
+    >&lt;R&gt;This application is &lt;B&gt;&lt;R Foreground="Red"&gt;NOT&lt;/R&gt; an official client developed by Gamania Digital Entertainment&lt;/B&gt;.&lt;L/&gt;&lt;L/&gt;Please think carefully before using a third-party tool to log in to your game account, and make sure you downloaded this program from a trusted source.&lt;L/&gt;&lt;L/&gt;Beanfun Classic UI — legacy interface maintenance branch&lt;L/&gt;&lt;/R&gt;</system:String
   >
   <system:String x:Key="Contact">Contact Developer</system:String>
   <system:String x:Key="Email">Send Email</system:String>

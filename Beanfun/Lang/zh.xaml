@@ -41,7 +41,7 @@
   <system:String x:Key="Version">版本</system:String>
   <system:String x:Key="CheckUpdate">檢測更新</system:String>
   <system:String x:Key="AboutText"
-    >&lt;R&gt;本程式&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;遊戲橘子數位科技&lt;/B&gt;開發的官方客戶端程式&lt;L/&gt;&lt;L/&gt;關於遊戲帳號使用第三方的方式登入請再三斟酌並且請確認您下載當前程式的途徑是否安全&lt;L/&gt;&lt;L/&gt;程式使用部分BeanfunLogin的代碼&lt;L/&gt;&lt;/R&gt;</system:String
+    >&lt;R&gt;本程式&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;遊戲橘子數位科技&lt;/B&gt;開發的官方客戶端程式&lt;L/&gt;&lt;L/&gt;關於遊戲帳號使用第三方的方式登入請再三斟酌並且請確認您下載當前程式的途徑是否安全&lt;L/&gt;&lt;L/&gt;Beanfun 經典 UI — 舊版介面維護分支&lt;L/&gt;&lt;/R&gt;</system:String
   >
   <system:String x:Key="Contact">聯繫開發者</system:String>
   <system:String x:Key="Email">發送電郵</system:String>

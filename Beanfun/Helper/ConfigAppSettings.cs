@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using System.IO;
 
 namespace Beanfun
@@ -13,7 +13,7 @@ namespace Beanfun
                 map.ExeConfigFilename =
                     System.Environment.GetFolderPath(
                         System.Environment.SpecialFolder.ApplicationData
-                    ) + "\\Beanfun\\Config.xml";
+                    ) + "\\BeanfunClassic\\Config.xml";
                 Configuration config = ConfigurationManager.OpenMappedExeConfiguration(
                     map,
                     ConfigurationUserLevel.None
@@ -40,7 +40,7 @@ namespace Beanfun
                     string filePath =
                         System.Environment.GetFolderPath(
                             System.Environment.SpecialFolder.ApplicationData
-                        ) + "\\Beanfun";
+                        ) + "\\BeanfunClassic";
                     DirectoryInfo dir = new DirectoryInfo(filePath);
                     FileSystemInfo[] fileinfo = dir.GetFileSystemInfos("Config.xml");
                     foreach (FileSystemInfo i in fileinfo)
@@ -75,7 +75,7 @@ namespace Beanfun
                 map.ExeConfigFilename =
                     System.Environment.GetFolderPath(
                         System.Environment.SpecialFolder.ApplicationData
-                    ) + "\\Beanfun\\Config.xml";
+                    ) + "\\BeanfunClassic\\Config.xml";
                 Configuration config = ConfigurationManager.OpenMappedExeConfiguration(
                     map,
                     ConfigurationUserLevel.None

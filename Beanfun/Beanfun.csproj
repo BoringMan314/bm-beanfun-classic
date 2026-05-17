@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Beanfun</RootNamespace>
-    <AssemblyName>Beanfun</AssemblyName>
+    <AssemblyName>BeanfunClassic</AssemblyName>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <StartupObject>Beanfun.App</StartupObject>

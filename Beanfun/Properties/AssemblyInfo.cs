@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("繽放")]
 [assembly: AssemblyDescription("第三方樂豆客戶端")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Pungin")]
-[assembly: AssemblyProduct("Beanfun")]
-[assembly: AssemblyCopyright("Copyright © Pungin  2017-2022")]
+[assembly: AssemblyCompany("[B.M] 圓周率™3.14")]
+[assembly: AssemblyProduct("Beanfun Classic")]
+[assembly: AssemblyCopyright("Copyright © [B.M] 圓周率™3.14")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,8 +30,8 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("5.9.*")]
-//[assembly: AssemblyFileVersion("0.0.0.0")]
+[assembly: AssemblyVersion("5.9.2.0")]
+[assembly: AssemblyFileVersion("5.9.2.0")]
 [assembly: NeutralResourcesLanguage("zh-Hant")]
 
-[assembly: System.Reflection.AssemblyInformationalVersion("5.9.1(2604180731)")]
+[assembly: System.Reflection.AssemblyInformationalVersion("5.9.2.0")]

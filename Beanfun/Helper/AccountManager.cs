@@ -68,7 +68,7 @@ namespace Beanfun
         private Records accountRecords = null;
         private string dataPath =
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData)
-            + "\\Beanfun\\Users.dat";
+            + "\\BeanfunClassic\\Users.dat";
 
         public bool init()
         {
