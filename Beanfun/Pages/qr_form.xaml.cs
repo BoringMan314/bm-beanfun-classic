@@ -1,8 +1,6 @@
 using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace Beanfun
@@ -20,36 +18,6 @@ namespace Beanfun
         private void btn_Refresh_QRCode_Click(object sender, RoutedEventArgs e)
         {
             App.MainWnd.refreshQRCode();
-        }
-
-        private void btn_Refresh_QRCode_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (qr_Tip.Visibility == Visibility.Collapsed)
-            {
-                DockPanel.SetDock(btn_Refresh_QRCode, Dock.Left);
-                qr_Tip.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void qr_Tip_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(
-                new ProcessStartInfo(
-                    "https://tw.beanfun.com/bfevent/bfApp/Page20160930/PC/index.html"
-                )
-                {
-                    UseShellExecute = true,
-                }
-            );
-        }
-
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (qr_Tip.Visibility == Visibility.Visible)
-            {
-                DockPanel.SetDock(btn_Refresh_QRCode, Dock.Top);
-                qr_Tip.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void btn_CopyDeeplink_Click(object sender, RoutedEventArgs e)

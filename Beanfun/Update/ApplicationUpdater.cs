@@ -33,7 +33,7 @@ namespace Beanfun.Update
                 var req = WebRequest.CreateHttp(url);
                 req.Method = "HEAD";
                 req.Timeout = ProbeTimeoutMs;
-                req.UserAgent = $"Beanfun(V{App.AssemblyVersion})";
+                req.UserAgent = $"BeanfunClassic(V{App.AssemblyVersion})";
                 using (req.GetResponse()) { }
                 return true;
             }
@@ -114,13 +114,13 @@ namespace Beanfun.Update
         private static void RunCheck(bool show)
         {
             string proxy = GetProxy();
-            var url = proxy + "https://api.github.com/repos/pungin/beanfun/releases";
+            var url = proxy + "https://api.github.com/repos/BoringMan314/bm-beanfun-classic/releases";
 
             try
             {
                 using (var client = new WebClient())
                 {
-                    client.Headers.Add("User-Agent", $"Beanfun(V{App.AssemblyVersion})");
+                    client.Headers.Add("User-Agent", $"BeanfunClassic(V{App.AssemblyVersion})");
                     client.Headers.Add("Accept", "application/vnd.github.v3+json");
                     var json = Encoding.UTF8.GetString(client.DownloadData(url));
 
@@ -130,8 +130,7 @@ namespace Beanfun.Update
                     if (release == null)
                         return;
 
-                    // 1. 解析遠端 Tag (格式: vMajor.Minor.Patch.Timestamp)
-                    // Groups: [1]=Major, [2]=Minor, [3]=Patch, [4]=Timestamp
+                    // 1. 解析遠端 Tag (格式: vMajor.Minor.Patch.Revision)
                     var match = Regex.Match(release.TagName, @"^v(\d+)\.(\d+)\.(\d+)\.(\d+)$");
                     if (!match.Success)
                         return;
@@ -139,13 +138,11 @@ namespace Beanfun.Update
                     string major = match.Groups[1].Value;
                     string minor = match.Groups[2].Value;
                     string patch = match.Groups[3].Value;
-                    string timestamp = match.Groups[4].Value;
+                    string revision = match.Groups[4].Value;
 
-                    // 2. 準備顯示文字: 5.8.3(2604011114)
-                    string newVerDisplay = $"{major}.{minor}.{patch}({timestamp})";
+                    string newVerDisplay = $"{major}.{minor}.{patch}.{revision}";
 
-                    // 3. 數值比較邏輯 (傳入 patch 以支援 5.8.9 < 5.8.10)
-                    if (IsNewerVersion(App.AssemblyVersion, major, minor, patch, timestamp))
+                    if (IsNewerVersion(App.AssemblyVersion, major, minor, patch, revision))
                     {
                         string msg = string.Format(
                             Regex.Unescape(
@@ -169,7 +166,7 @@ namespace Beanfun.Update
                             string downloadUrl =
                                 (release.Assets != null && release.Assets.Count > 0)
                                     ? proxy + release.Assets[0].BrowserDownloadUrl
-                                    : $"https://github.com/pungin/Beanfun/releases/tag/{release.TagName}";
+                                    : $"https://github.com/BoringMan314/bm-beanfun-classic/releases/tag/{release.TagName}";
 
                             Process.Start(
                                 new ProcessStartInfo
@@ -222,67 +219,27 @@ namespace Beanfun.Update
             string major,
             string minor,
             string patch,
-            string timestamp
+            string revision
         )
         {
             try
             {
-                // 提取本地 Timestamp
-                var match = Regex.Match(localVer, @"(\d+)\.(\d+)\.?(\d+)?\.?\((\d+)\)");
+                var remoteVersion = new Version(
+                    int.Parse(major),
+                    int.Parse(minor),
+                    int.Parse(patch),
+                    int.Parse(revision)
+                );
 
-                if (match.Success)
-                {
-                    string localTimestamp = match.Groups[4].Value;
-                    if (timestamp == localTimestamp)
-                    {
-                        return false;
-                    }
+                string normalizedLocal = localVer;
+                int metadataIndex = normalizedLocal.IndexOfAny(new[] { '+', '(' });
+                if (metadataIndex > 0)
+                    normalizedLocal = normalizedLocal.Substring(0, metadataIndex);
 
-                    long remoteNum = long.Parse(
-                        string.Format(
-                            "{0:D3}{1:D3}{2:D3}{3}",
-                            int.Parse(major),
-                            int.Parse(minor),
-                            int.Parse(patch),
-                            timestamp
-                        )
-                    );
+                if (!Version.TryParse(normalizedLocal, out var localVersion))
+                    return false;
 
-                    int lMajor = int.Parse(match.Groups[1].Value);
-                    int lMinor = int.Parse(match.Groups[2].Value);
-                    int lPatch = string.IsNullOrEmpty(match.Groups[3].Value)
-                        ? 0
-                        : int.Parse(match.Groups[3].Value);
-
-                    long localNum = long.Parse(
-                        string.Format(
-                            "{0:D3}{1:D3}{2:D3}{3}",
-                            lMajor,
-                            lMinor,
-                            lPatch,
-                            localTimestamp
-                        )
-                    );
-
-                    return remoteNum > localNum;
-                }
-                else
-                {
-                    long remoteNum = long.Parse(
-                        string.Format(
-                            "{0:D3}{1:D3}{2:D3}{3}",
-                            int.Parse(major),
-                            int.Parse(minor),
-                            int.Parse(patch),
-                            timestamp
-                        )
-                    );
-
-                    string digits = Regex.Replace(localVer, @"[^\d]", "");
-                    long localNum = long.Parse(digits.PadLeft(19, '0'));
-
-                    return remoteNum > localNum;
-                }
+                return remoteVersion > localVersion;
             }
             catch (Exception ex)
             {

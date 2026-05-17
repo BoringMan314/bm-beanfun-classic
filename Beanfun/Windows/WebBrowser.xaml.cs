@@ -19,7 +19,7 @@ namespace Beanfun
             _initialUri = uri;
             Environment.SetEnvironmentVariable(
                 "WEBVIEW2_USER_DATA_FOLDER",
-                Path.GetTempPath() + "\\Beanfun\\WebView2\\"
+                Path.GetTempPath() + "\\BeanfunClassic\\WebView2\\"
             );
             Loaded += WebBrowser_Loaded;
         }
@@ -32,7 +32,11 @@ namespace Beanfun
 
             if (bool.Parse(ConfigAppSettings.GetValue("disableHardwareAcceleration", "false")))
             {
-                string userDataFolder = Path.Combine(Path.GetTempPath(), "Beanfun", "WebView2");
+                string userDataFolder = Path.Combine(
+                    Path.GetTempPath(),
+                    "BeanfunClassic",
+                    "WebView2"
+                );
                 var options = new CoreWebView2EnvironmentOptions();
                 options.AdditionalBrowserArguments = "--disable-gpu --disable-gpu-compositing";
                 CoreWebView2Environment env = await CoreWebView2Environment.CreateAsync(

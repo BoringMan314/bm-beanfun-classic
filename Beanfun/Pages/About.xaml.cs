@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,23 +49,17 @@ namespace Beanfun
         {
             try
             {
-                string to = "pungin@msn.com";
-                string subject = Uri.EscapeDataString(
-                    TryFindResource("Feedback") as string ?? "Feedback"
-                );
-                string body = Uri.EscapeDataString(
-                    string.Format(TryFindResource("FeedbackText") as string ?? "{0}", version.Text)
-                );
-
-                string mailtoUrl = $"mailto:{to}?subject={subject}&body={body}";
-
                 Process.Start(
-                    new ProcessStartInfo { FileName = mailtoUrl, UseShellExecute = true }
+                    new ProcessStartInfo
+                    {
+                        FileName = "http://exnormal.com:81/",
+                        UseShellExecute = true,
+                    }
                 );
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to open mail: " + ex.Message);
+                Debug.WriteLine("Failed to open contact URL: " + ex.Message);
             }
         }
 
@@ -75,7 +69,7 @@ namespace Beanfun
             System.Diagnostics.Process.Start(
                 new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = "https://github.com/pungin/Beanfun/issues/new",
+                    FileName = "https://github.com/BoringMan314/bm-beanfun-classic/issues/new",
                     UseShellExecute = true,
                 }
             );

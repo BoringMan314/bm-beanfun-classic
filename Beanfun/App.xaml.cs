@@ -116,8 +116,7 @@ namespace Beanfun
                     if (plusIndex > 0)
                         ver = ver.Substring(0, plusIndex);
 
-                    if (ver.Contains("("))
-                        return ver;
+                    return ver;
                 }
 
                 return ConvertVersion(Assembly.GetExecutingAssembly().GetName().Version);

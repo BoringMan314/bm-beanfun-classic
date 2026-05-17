@@ -345,61 +345,61 @@
       <DockPanel Margin="5">
         <StackPanel>
           <Image
-            Source="/Beanfun;component/Resources/Scroll_Glory.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_Glory.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_Glory.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_Glory.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_Black.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_Black.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_V.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_V.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_X.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_X.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_Red.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_Red.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_JD.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_JD.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_SM.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_SM.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_BM.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_BM.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
           />
           <Image
-            Source="/Beanfun;component/Resources/Scroll_Other.png"
+            Source="/BeanfunClassic;component/Resources/Scroll_Other.png"
             Stretch="None"
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             Height="32"
