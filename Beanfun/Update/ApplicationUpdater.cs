@@ -114,7 +114,8 @@ namespace Beanfun.Update
         private static void RunCheck(bool show)
         {
             string proxy = GetProxy();
-            var url = proxy + "https://api.github.com/repos/BoringMan314/bm-beanfun-classic/releases";
+            var url =
+                proxy + "https://api.github.com/repos/BoringMan314/bm-beanfun-classic/releases";
 
             try
             {
