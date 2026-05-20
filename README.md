@@ -12,6 +12,10 @@
 
 ---
 
+![程式畫面示意](screenshot/screenshot.png)
+
+---
+
 ## 下載與使用 (Getting Started)
 
 ### 系統要求 (Prerequisites)
