@@ -176,6 +176,10 @@ namespace Beanfun.Update
                                     UseShellExecute = true,
                                 }
                             );
+
+                            Application.Current?.Dispatcher.BeginInvoke(
+                                new Action(() => Application.Current.Shutdown())
+                            );
                         }
                     }
                     else if (show)
