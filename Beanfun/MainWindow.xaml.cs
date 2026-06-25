@@ -1369,6 +1369,23 @@ namespace Beanfun
             ShowAccountListPage();
         }
 
+        public void RecaptchaLoginCompleted(
+            string webToken,
+            System.Collections.Generic.List<System.Net.Cookie> cookies
+        )
+        {
+            bfClient.GamePassLogin(webToken, cookies, service_code, service_region);
+
+            if (bfClient.errmsg != null)
+            {
+                errexit(bfClient.errmsg, 1);
+                NavigateLoginPage();
+                return;
+            }
+
+            OnLoginCompleted();
+        }
+
         private void SaveLoginCredentials()
         {
             bool isAccountLogin =
@@ -1506,6 +1523,24 @@ namespace Beanfun
                     loginTotp.otp5.Text = "";
                     loginTotp.otp6.Text = "";
                     loginTotp.otp1.Focus();
+                    return;
+                }
+                else if ((string)e.Result == "LoginRecaptchaRequired")
+                {
+                    string skey = this.bfClient?.GetSessionKey();
+                    if (string.IsNullOrEmpty(skey))
+                    {
+                        errexit("SessionKeyFailed", 1);
+                        NavigateLoginPage();
+                        return;
+                    }
+
+                    frame.Content = loginPage;
+                    new AccountLoginBrowser(
+                        skey,
+                        loginPage.id_pass.t_AccountID.Text,
+                        loginPage.id_pass.t_Password.Password
+                    ).Show();
                     return;
                 }
                 else if ((string)e.Result == "LoginAdvanceCheck")
