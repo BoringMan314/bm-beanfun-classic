@@ -519,6 +519,10 @@
     >Please fill in both email and captcha code.</system:String
   >
   <system:String x:Key="GamePassLogin">GamePass Login</system:String>
+  <system:String x:Key="AccountLoginTitle">Account Login / Verification</system:String>
+  <system:String x:Key="LoginRecaptchaHint"
+    >Verification is required. Complete the &quot;I'm not a robot&quot; check in the window that opens, then sign in.</system:String
+  >
   <system:String x:Key="GamePassWaiting">Waiting for GamePass authentication...</system:String>
   <system:String x:Key="GamePassOpen">Open GamePass Login</system:String>
   <system:String x:Key="SessionKeyFailed"

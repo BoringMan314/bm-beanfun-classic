@@ -53,6 +53,12 @@ namespace Beanfun
                     return null;
                 }
 
+                if (CheckRecaptchaRequired(skey, indexUrl))
+                {
+                    this.errmsg = "LoginRecaptchaRequired";
+                    return null;
+                }
+
                 // Step 2: Check account type
                 SetJsonHeaders(formToken, indexUrl);
                 string checkTypeBody = new JObject
@@ -188,6 +194,15 @@ namespace Beanfun
                     return null;
                 }
 
+                if (
+                    resultMsg.Contains("我不是機器人")
+                    || resultMsg.Contains("I am not a robot")
+                )
+                {
+                    this.errmsg = "LoginRecaptchaRequired";
+                    return null;
+                }
+
                 this.errmsg = resultMsg;
                 return null;
             }
@@ -289,6 +304,34 @@ namespace Beanfun
             {
                 this.errmsg = "LoginUnknown\n\n" + e.Message + "\n" + e.StackTrace;
                 return null;
+            }
+        }
+
+        private bool CheckRecaptchaRequired(string skey, string indexUrl)
+        {
+            try
+            {
+                SetBaseHeaders(true, "application/json, text/plain, */*", indexUrl);
+                this.Headers.Add("X-Requested-With", "XMLHttpRequest");
+                this.Headers.Add("Origin", "https://login.beanfun.com");
+                string response = this.DownloadString(
+                    $"https://login.beanfun.com/Login/InitLogin?pSKey={skey}"
+                );
+                if (
+                    string.IsNullOrWhiteSpace(response)
+                    || !response.TrimStart().StartsWith("{")
+                )
+                    return false;
+
+                var json = JObject.Parse(response);
+                return json["ResultData"]?["IsRecaptcha"]?.Value<bool>() ?? false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(
+                    $"[CheckRecaptchaRequired] assuming not required: {ex.Message}"
+                );
+                return false;
             }
         }
 

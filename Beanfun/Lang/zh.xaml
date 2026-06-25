@@ -448,6 +448,10 @@
   >
   <system:String x:Key="AdvanceCheckFillEmailAndCaptcha">請填寫 Email 同驗證碼</system:String>
   <system:String x:Key="GamePassLogin">GamePass 登入</system:String>
+  <system:String x:Key="AccountLoginTitle">帳號登入 / 驗證</system:String>
+  <system:String x:Key="LoginRecaptchaHint"
+    >系統要求進行「我不是機器人」驗證。請在開啟的視窗中完成驗證並登入。</system:String
+  >
   <system:String x:Key="GamePassWaiting">正在等待 GamePass 認證...</system:String>
   <system:String x:Key="GamePassOpen">開啟 GamePass 登入</system:String>
   <system:String x:Key="SessionKeyFailed">無法取得 SessionKey，請稍後再試</system:String>
