@@ -24,6 +24,7 @@ namespace Beanfun
         private string SessionKey;
 
         public string GetSessionKey() => SessionKey;
+
         private string totpResponse;
         private string totpUrl;
         public string advanceCheckUrl;

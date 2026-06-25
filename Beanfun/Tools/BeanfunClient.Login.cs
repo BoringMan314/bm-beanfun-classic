@@ -194,10 +194,7 @@ namespace Beanfun
                     return null;
                 }
 
-                if (
-                    resultMsg.Contains("我不是機器人")
-                    || resultMsg.Contains("I am not a robot")
-                )
+                if (resultMsg.Contains("我不是機器人") || resultMsg.Contains("I am not a robot"))
                 {
                     this.errmsg = "LoginRecaptchaRequired";
                     return null;
@@ -317,10 +314,7 @@ namespace Beanfun
                 string response = this.DownloadString(
                     $"https://login.beanfun.com/Login/InitLogin?pSKey={skey}"
                 );
-                if (
-                    string.IsNullOrWhiteSpace(response)
-                    || !response.TrimStart().StartsWith("{")
-                )
+                if (string.IsNullOrWhiteSpace(response) || !response.TrimStart().StartsWith("{"))
                     return false;
 
                 var json = JObject.Parse(response);
@@ -328,9 +322,7 @@ namespace Beanfun
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(
-                    $"[CheckRecaptchaRequired] assuming not required: {ex.Message}"
-                );
+                Debug.WriteLine($"[CheckRecaptchaRequired] assuming not required: {ex.Message}");
                 return false;
             }
         }

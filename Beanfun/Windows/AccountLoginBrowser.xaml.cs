@@ -54,9 +54,7 @@ namespace Beanfun
                 await wb_Main.EnsureCoreWebView2Async(env);
             }
 
-            wb_Main.Source = new Uri(
-                $"https://login.beanfun.com/Login/Index?pSKey={_skey}"
-            );
+            wb_Main.Source = new Uri($"https://login.beanfun.com/Login/Index?pSKey={_skey}");
         }
 
         private async void OnWebViewReady(
