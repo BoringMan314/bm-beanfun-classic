@@ -11,6 +11,10 @@ namespace Beanfun
             "3bc4d5e6f2a79108",
             "cdbeaf9012456378",
             "4e6fb81a3c5d7092",
+            "bdef1246789ac530",
+            "5f82cb4093e71d6a",
+            "df1468ace0357b92",
+            "b50c61a4f93e82d7",
         };
 
         public static string DecodeLaunchTicket(string data)
@@ -47,11 +51,36 @@ namespace Beanfun
                 return null;
             }
 
-            string table = Tables[selector % Tables.Length];
-            var normalized = new StringBuilder(data.Length - 1);
-            for (int i = 1; i < data.Length; i++)
+            string rest = data.Substring(1);
+            bool[] tried = new bool[Tables.Length];
+            int[] order = new int[2 + Tables.Length];
+            order[0] = selector % 4;
+            order[1] = selector % Tables.Length;
+            for (int i = 0; i < Tables.Length; i++)
+                order[2 + i] = i;
+
+            foreach (int tableIndex in order)
             {
-                int idx = table.IndexOf(data[i]);
+                if (tried[tableIndex])
+                    continue;
+                tried[tableIndex] = true;
+                string plaintext = DecodeWith(rest, selector, tableIndex);
+                if (
+                    plaintext != null
+                    && plaintext.IndexOf("LaunchTicket=", StringComparison.Ordinal) >= 0
+                )
+                    return plaintext; // 錯表只會得到雜訊，不會碰巧出現欄位名
+            }
+            return null;
+        }
+
+        private static string DecodeWith(string body, int selector, int tableIndex)
+        {
+            string table = Tables[tableIndex];
+            var normalized = new StringBuilder(body.Length);
+            for (int i = 0; i < body.Length; i++)
+            {
+                int idx = table.IndexOf(body[i]);
                 if (idx < 0)
                     return null;
                 normalized.Append(Convert.ToString(idx, 16));

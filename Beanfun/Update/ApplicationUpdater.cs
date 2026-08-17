@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -116,11 +115,16 @@ namespace Beanfun.Update
 
         internal static void CheckApplicationUpdate(bool show)
         {
-            if (Interlocked.CompareExchange(ref _checkRunning, 1, 0) != 0)
-                return; // 避免啟動檢查與關於頁重複觸發
-
             var thread = new Thread(() =>
             {
+                if (show)
+                {
+                    while (Interlocked.CompareExchange(ref _checkRunning, 1, 0) != 0)
+                        Thread.Sleep(50); // 手動檢查等啟動檢查跑完，不要直接丢掉
+                }
+                else if (Interlocked.CompareExchange(ref _checkRunning, 1, 0) != 0)
+                    return;
+
                 try
                 {
                     RunCheck(show);
@@ -139,102 +143,207 @@ namespace Beanfun.Update
 
         private static void RunCheck(bool show)
         {
-            string proxy = GetProxy();
-            var url =
-                proxy + "https://api.github.com/repos/BoringMan314/bm-beanfun-classic/releases";
-
             try
             {
-                using (var client = new WebClient())
+                string json = TryDownloadReleasesJson(out string proxy);
+                if (string.IsNullOrEmpty(json))
                 {
-                    client.Headers.Add("User-Agent", $"BeanfunClassic(V{App.AssemblyVersion})");
-                    client.Headers.Add("Accept", "application/vnd.github.v3+json");
-                    var json = Encoding.UTF8.GetString(client.DownloadData(url));
-
-                    var releases = JsonConvert.DeserializeObject<List<GitHubRelease>>(json);
-                    GitHubRelease release = GetLastRelease(releases);
-
-                    if (release == null)
-                        return;
-
-                    var match = Regex.Match(release.TagName, @"^v(\d+)\.(\d+)\.(\d+)\.(\d+)$"); // tag 如 v5.9.2.2
-                    if (!match.Success)
-                        return;
-
-                    string major = match.Groups[1].Value;
-                    string minor = match.Groups[2].Value;
-                    string patch = match.Groups[3].Value;
-                    string revision = match.Groups[4].Value;
-
-                    string newVerDisplay = $"{major}.{minor}.{patch}.{revision}";
-
-                    if (IsNewerVersion(App.AssemblyVersion, major, minor, patch, revision))
-                    {
-                        string msg = string.Format(
-                            Regex.Unescape(
-                                Application.Current.TryFindResource("NewVersionDetected") as string
-                                    ?? "Detect New Version {0} (Current: {1})\n\n{2}"
-                            ),
-                            newVerDisplay,
-                            App.AssemblyVersion,
-                            release.Body
-                        );
-
-                        MessageBoxResult result = MessageBox.Show(
-                            msg,
-                            Application.Current.TryFindResource("UpdateCheck") as string
-                                ?? "Update Check",
-                            MessageBoxButton.OKCancel
-                        );
-
-                        if (result == MessageBoxResult.OK)
-                        {
-                            string downloadUrl =
-                                (release.Assets != null && release.Assets.Count > 0)
-                                    ? proxy + release.Assets[0].BrowserDownloadUrl
-                                    : $"https://github.com/BoringMan314/bm-beanfun-classic/releases/tag/{release.TagName}";
-
-                            Process.Start(
-                                new ProcessStartInfo
-                                {
-                                    FileName = downloadUrl,
-                                    UseShellExecute = true,
-                                }
-                            );
-
-                            Application.Current?.Dispatcher.BeginInvoke(
-                                new Action(() => Application.Current.Shutdown())
-                            );
-                        }
-                    }
-                    else if (show)
-                    {
-                        MessageBox.Show(
-                            Application.Current.TryFindResource("NoUpdatesDetected") as string
-                                ?? "No Updates Found",
-                            Application.Current.TryFindResource("UpdateCheck") as string
-                                ?? "Update Check",
+                    if (show)
+                        ShowMessage(
+                            FindText("ConnectionFailed", "Connection failed"),
+                            FindText("UpdateCheck", "Update Check"),
                             MessageBoxButton.OK
                         );
-                    }
+                    return;
                 }
+
+                var releases = JsonConvert.DeserializeObject<List<GitHubRelease>>(json);
+                GitHubRelease release = GetLastRelease(releases);
+
+                if (release == null)
+                {
+                    if (show)
+                        ShowNoUpdate();
+                    return;
+                }
+
+                var match = Regex.Match(release.TagName, @"^v(\d+)\.(\d+)\.(\d+)\.(\d+)$"); // tag 如 v5.9.2.2
+                if (!match.Success)
+                {
+                    if (show)
+                        ShowNoUpdate();
+                    return;
+                }
+
+                string major = match.Groups[1].Value;
+                string minor = match.Groups[2].Value;
+                string patch = match.Groups[3].Value;
+                string revision = match.Groups[4].Value;
+                string newVerDisplay = $"{major}.{minor}.{patch}.{revision}";
+
+                if (!IsNewerVersion(App.AssemblyVersion, major, minor, patch, revision))
+                {
+                    if (show)
+                        ShowNoUpdate();
+                    return;
+                }
+
+                string template = FindText(
+                    "NewVersionDetected",
+                    "Detect New Version {0} (Current: {1})\n\n{2}"
+                );
+                string msg = string.Format(
+                    Regex.Unescape(template),
+                    newVerDisplay,
+                    App.AssemblyVersion,
+                    EscapeFormat(release.Body)
+                );
+
+                MessageBoxResult result = ShowMessage(
+                    msg,
+                    FindText("UpdateCheck", "Update Check"),
+                    MessageBoxButton.OKCancel
+                );
+
+                if (result != MessageBoxResult.OK)
+                    return;
+
+                string downloadUrl =
+                    (release.Assets != null && release.Assets.Count > 0)
+                        ? proxy + release.Assets[0].BrowserDownloadUrl
+                        : $"https://github.com/BoringMan314/bm-beanfun-classic/releases/tag/{release.TagName}";
+
+                Process.Start(
+                    new ProcessStartInfo { FileName = downloadUrl, UseShellExecute = true }
+                );
+
+                RunOnUi(() => Application.Current?.Shutdown());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Update check failed: " + ex.Message);
+                if (show)
+                    ShowMessage(
+                        FindText("ConnectionFailed", "Connection failed"),
+                        FindText("UpdateCheck", "Update Check"),
+                        MessageBoxButton.OK
+                    );
             }
+        }
+
+        private static string TryDownloadReleasesJson(out string usedProxy)
+        {
+            const string api =
+                "https://api.github.com/repos/BoringMan314/bm-beanfun-classic/releases";
+            var prefixes = new List<string>();
+            string cached = GetProxy();
+            if (cached != null)
+                prefixes.Add(cached);
+            if (!prefixes.Contains(""))
+                prefixes.Insert(0, "");
+            foreach (string proxy in GH_PROXIES)
+            {
+                if (!prefixes.Contains(proxy))
+                    prefixes.Add(proxy);
+            }
+
+            foreach (string prefix in prefixes)
+            {
+                try
+                {
+                    var req = (HttpWebRequest)WebRequest.Create(prefix + api);
+                    req.Method = "GET";
+                    req.Timeout = 15000;
+                    req.ReadWriteTimeout = 15000;
+                    req.UserAgent = $"BeanfunClassic(V{App.AssemblyVersion})";
+                    req.Accept = "application/vnd.github.v3+json";
+                    using var resp = (HttpWebResponse)req.GetResponse();
+                    using var stream = resp.GetResponseStream();
+                    if (stream == null)
+                        continue;
+                    using var reader = new StreamReader(stream);
+                    string json = reader.ReadToEnd();
+                    if (!string.IsNullOrWhiteSpace(json) && json.TrimStart().StartsWith("["))
+                    {
+                        usedProxy = prefix;
+                        return json;
+                    }
+                }
+                catch { }
+            }
+
+            usedProxy = "";
+            return null;
+        }
+
+        private static void ShowNoUpdate()
+        {
+            ShowMessage(
+                FindText("NoUpdatesDetected", "No Updates Found"),
+                FindText("UpdateCheck", "Update Check"),
+                MessageBoxButton.OK
+            );
+        }
+
+        private static string FindText(string key, string fallback)
+        {
+            return RunOnUi(() => Application.Current?.TryFindResource(key) as string ?? fallback);
+        }
+
+        private static MessageBoxResult ShowMessage(
+            string msg,
+            string title,
+            MessageBoxButton buttons
+        )
+        {
+            return RunOnUi(() =>
+            {
+                Window owner = Application.Current?.MainWindow;
+                if (owner != null && owner.IsVisible)
+                    return MessageBox.Show(owner, msg, title, buttons);
+                return MessageBox.Show(msg, title, buttons);
+            });
+        }
+
+        private static T RunOnUi<T>(Func<T> func)
+        {
+            var dispatcher = Application.Current?.Dispatcher;
+            if (dispatcher == null || dispatcher.CheckAccess())
+                return func();
+            return dispatcher.Invoke(func);
+        }
+
+        private static void RunOnUi(Action action)
+        {
+            RunOnUi(() =>
+            {
+                action();
+                return 0;
+            });
+        }
+
+        private static string EscapeFormat(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return "";
+            return s.Replace("{", "{{").Replace("}", "}}");
         }
 
         private static GitHubRelease GetLastRelease(List<GitHubRelease> releases)
         {
+            if (releases == null)
+                return null;
+
             string channel = ConfigAppSettings.GetValue("updateChannel", "Stable");
             bool isBeta = channel.Equals("Beta") || channel.Equals("Preview");
 
             foreach (var release in releases)
             {
-                if (isBeta)
-                    return release;
-                if (!release.Prerelease)
+                if (release == null || string.IsNullOrEmpty(release.TagName))
+                    continue;
+                if (!Regex.IsMatch(release.TagName, @"^v(\d+)\.(\d+)\.(\d+)\.(\d+)$"))
+                    continue;
+                if (isBeta || !release.Prerelease)
                     return release;
             }
             return null;

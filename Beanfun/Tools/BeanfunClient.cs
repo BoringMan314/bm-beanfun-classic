@@ -162,27 +162,14 @@ namespace Beanfun
             this.CookieContainer.Add(new Cookie(name, value, path, domain));
         }
 
-        public void SetWebToken(string token)
-        {
-            this.webtoken = token;
-        }
-
         private string GetCurrentTime(int method = 0)
         {
             DateTime date = DateTime.Now;
-            switch (method)
-            {
-                case 1:
-                    return (date.Year - 1900).ToString()
-                        + (date.Month - 1).ToString()
-                        + date.ToString("ddHHmmssfff");
-                case 2:
-                    return date.Year.ToString()
-                        + (date.Month - 1).ToString()
-                        + date.ToString("ddHHmmssfff");
-                default:
-                    return date.ToString("yyyyMMddHHmmss.fff");
-            }
+            if (method == 2)
+                return date.Year.ToString()
+                    + (date.Month - 1).ToString()
+                    + date.ToString("ddHHmmssfff");
+            return date.ToString("yyyyMMddHHmmss.fff");
         }
 
         public void Ping()

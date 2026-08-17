@@ -11,7 +11,7 @@ using Utility.ModifyRegistry;
 namespace Beanfun
 {
     [Serializable]
-    class AccountRecords
+    class AccountRecords // 舊版 BinaryFormatter 反序列化目標，勿刪
     {
         public List<string> regionList = null,
             accountList = null,
@@ -31,22 +31,6 @@ namespace Beanfun
             verifyList = null;
         public List<int> methodList = null;
         public List<bool> autoLoginList = null;
-
-        public static Records Change(object oldRecords)
-        {
-            Records res = new Records();
-            if (oldRecords is AccountRecords)
-            {
-                AccountRecords records = (AccountRecords)oldRecords;
-                res.regionList = records.regionList;
-                res.accountList = records.accountList;
-                res.passwdList = records.passwdList;
-                res.verifyList = records.verifyList;
-                res.methodList = records.methodList;
-                res.autoLoginList = records.autoLoginList;
-            }
-            return res;
-        }
     }
 
     public class AccountManager

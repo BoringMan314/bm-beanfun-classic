@@ -32,45 +32,83 @@ namespace Beanfun
                     host = "bfweb.hk.beanfun.com";
                     loginHost = "login.hk.beanfun.com";
                 }
-                response = this.DownloadString(
-                    $"https://{host}/beanfun_block/game_zone/game_start_step2.aspx?service_code={service_code}&service_region={service_region}&sotp={acc.ssn}&dt={GetCurrentTime(2)}"
-                );
+                string step2Url =
+                    $"https://{host}/beanfun_block/game_zone/game_start_step2.aspx?service_code={service_code}&service_region={service_region}&sotp={acc.ssn}&dt={GetCurrentTime(2)}";
+                response = this.DownloadString(step2Url);
+                string referer = this.ResponseUri?.ToString() ?? step2Url;
+
+                // 先看頁面有沒有 m_objData：有就走 v2，沒有才要求舊頁面那些字串
+                LaunchHandoff launch = ParseLaunchHandoff(response);
+                bool migrated = launch != null;
+
                 Regex regex = new Regex("GetResultByLongPolling&key=(.*)\"");
-                if (!regex.IsMatch(response))
+                string longPollingKey = null;
+                if (regex.IsMatch(response))
+                    longPollingKey = regex.Match(response).Groups[1].Value;
+                if (string.IsNullOrEmpty(longPollingKey) && !migrated)
                 {
                     this.errmsg = "OTPNoLongPollingKey:" + response;
                     return null;
                 }
-                string longPollingKey = regex.Match(response).Groups[1].Value;
-                if (string.IsNullOrEmpty(longPollingKey))
-                {
-                    this.errmsg = "OTPNoLongPollingKey:" + response;
-                    return null;
-                }
+
                 string unkKey = null;
                 string unkValue = null;
-                if (App.LoginRegion == "TW")
+                regex = new Regex("MyAccountData.ServiceAccountCreateTime \\+ \"(.*)=(.*)\";");
+                if (regex.IsMatch(response))
                 {
-                    regex = new Regex("MyAccountData.ServiceAccountCreateTime \\+ \"(.*)=(.*)\";");
-                    if (!regex.IsMatch(response))
-                    {
-                        this.errmsg = "OTPNoUnkData";
-                        return null;
-                    }
                     unkKey = Uri.UnescapeDataString(regex.Match(response).Groups[1].Value);
                     unkValue = Uri.UnescapeDataString(regex.Match(response).Groups[2].Value);
                 }
+                else if (App.LoginRegion == "TW" && !migrated)
+                {
+                    this.errmsg = "OTPNoUnkData";
+                    return null;
+                }
+
                 if (string.IsNullOrEmpty(acc.screatetime))
                 {
                     regex = new Regex("ServiceAccountCreateTime: \"([^\"]+)\"");
-                    if (!regex.IsMatch(response))
+                    if (regex.IsMatch(response))
+                        acc.screatetime = regex.Match(response).Groups[1].Value;
+                    else if (!migrated)
                     {
                         this.errmsg = "OTPNoCreateTime";
                         return null;
                     }
-                    acc.screatetime = regex.Match(response).Groups[1].Value;
                 }
-                LaunchHandoff launch = ParseLaunchHandoff(response);
+
+                this.Headers.Set("Referer", referer);
+
+                GgmIntegrity local = GgmIntegrity.TryFromLocalDll();
+                GgmIntegrity integrity = local ?? GgmIntegrity.Builtin(); // 本機 DLL 沒有則用內建常數
+                bool githubTried = false;
+
+                if (migrated)
+                {
+                    TryRecordServiceStart(
+                        host,
+                        acc,
+                        service_code,
+                        service_region,
+                        unkKey,
+                        unkValue,
+                        referer
+                    ); // v2 頁可能缺表單欄，失敗不擋
+                    string otp = TryOtpV2(
+                        host,
+                        launch,
+                        service_code,
+                        service_region,
+                        referer,
+                        ref integrity,
+                        local,
+                        ref githubTried
+                    );
+                    if (otp != null)
+                        return otp;
+                    if (string.IsNullOrEmpty(longPollingKey))
+                        return null; // 已遷移頁沒有舊 GET 可用
+                }
 
                 response = this.DownloadString(
                     $"https://{loginHost}/generic_handlers/get_cookies.ashx"
@@ -89,17 +127,17 @@ namespace Beanfun
                     return null;
                 }
 
+                this.Headers.Set("Referer", referer);
                 NameValueCollection payload = new NameValueCollection();
                 payload.Add("service_code", service_code);
                 payload.Add("service_region", service_region);
                 payload.Add("service_account_id", acc.sid);
                 payload.Add("sotp", acc.ssn);
                 payload.Add("service_account_display_name", acc.sname);
-                payload.Add("service_account_create_time", acc.screatetime);
+                if (!string.IsNullOrEmpty(acc.screatetime))
+                    payload.Add("service_account_create_time", acc.screatetime);
                 if (unkKey != null && unkValue != null)
-                {
                     payload.Add(unkKey, unkValue);
-                }
                 System.Net.ServicePointManager.Expect100Continue = false;
                 this.UploadString(
                     $"https://{host}/beanfun_block/generic_handlers/record_service_start.ashx",
@@ -108,21 +146,6 @@ namespace Beanfun
                 this.DownloadString(
                     $"https://{host}/generic_handlers/get_result.ashx?meth=GetResultByLongPolling&key={longPollingKey}&_={GetCurrentTime()}"
                 );
-
-                GgmIntegrity local = GgmIntegrity.TryFromLocalDll();
-                GgmIntegrity integrity = local ?? GgmIntegrity.Builtin(); // 本機 DLL 沒有則用內建常數
-                bool githubTried = false;
-                string otp = TryOtpV2(
-                    host,
-                    launch,
-                    service_code,
-                    service_region,
-                    ref integrity,
-                    local,
-                    ref githubTried
-                );
-                if (otp != null)
-                    return otp;
 
                 response = this.DownloadString(
                     BuildLegacyOtpUrl(
@@ -198,6 +221,39 @@ namespace Beanfun
             return new LaunchHandoff { Sn = sn.Groups[1].Value, Data = data.Groups[1].Value };
         }
 
+        private void TryRecordServiceStart(
+            string host,
+            ServiceAccount acc,
+            string service_code,
+            string service_region,
+            string unkKey,
+            string unkValue,
+            string referer
+        )
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(referer))
+                    this.Headers.Set("Referer", referer);
+                NameValueCollection payload = new NameValueCollection();
+                payload.Add("service_code", service_code);
+                payload.Add("service_region", service_region);
+                payload.Add("service_account_id", acc.sid);
+                payload.Add("sotp", acc.ssn);
+                payload.Add("service_account_display_name", acc.sname);
+                if (!string.IsNullOrEmpty(acc.screatetime))
+                    payload.Add("service_account_create_time", acc.screatetime);
+                if (unkKey != null && unkValue != null)
+                    payload.Add(unkKey, unkValue);
+                System.Net.ServicePointManager.Expect100Continue = false;
+                this.UploadString(
+                    $"https://{host}/beanfun_block/generic_handlers/record_service_start.ashx",
+                    payload
+                );
+            }
+            catch { }
+        }
+
         private static bool NeedsIntegrityRetry(string errmsg)
         {
             return IsClientIntegrityFailed(errmsg) || IsQueryStringError(errmsg);
@@ -221,16 +277,24 @@ namespace Beanfun
             LaunchHandoff launch,
             string service_code,
             string service_region,
+            string referer,
             ref GgmIntegrity integrity,
             GgmIntegrity local,
             ref bool githubTried
         )
         {
             if (launch == null)
-                return null; // 香港頁面沒有 m_objData，走舊 GET
+                return null; // 沒有 m_objData 的頁面走舊 GET
             while (true)
             {
-                string otp = GetOtpV2(host, launch, service_code, service_region, integrity);
+                string otp = GetOtpV2(
+                    host,
+                    launch,
+                    service_code,
+                    service_region,
+                    integrity,
+                    referer
+                );
                 if (otp != null)
                     return otp;
                 if (!TryNextIntegrity(ref integrity, local, ref githubTried))
@@ -287,7 +351,8 @@ namespace Beanfun
             LaunchHandoff launch,
             string service_code,
             string service_region,
-            GgmIntegrity integrity
+            GgmIntegrity integrity,
+            string referer
         )
         {
             string ticket = LaunchData.DecodeLaunchTicket(launch.Data); // 從 m_objData.data 解 LaunchTicket
@@ -296,6 +361,9 @@ namespace Beanfun
                 this.errmsg = "OTPNoLaunchTicket";
                 return null;
             }
+
+            if (!string.IsNullOrEmpty(referer))
+                this.Headers.Set("Referer", referer);
 
             int tick = Environment.TickCount;
             try
@@ -322,6 +390,8 @@ namespace Beanfun
             }.ToString(Newtonsoft.Json.Formatting.None);
 
             this.Headers.Set("User-Agent", userAgent);
+            if (!string.IsNullOrEmpty(referer))
+                this.Headers.Set("Referer", referer);
             this.Headers[HttpRequestHeader.ContentType] = "application/json; charset=utf-8";
             string response = this.UploadString(
                 $"https://{host}/beanfun_block/generic_handlers/get_webstart_otp_v2.ashx",
