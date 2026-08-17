@@ -1,11 +1,11 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Beanfun
 {
     /// <summary>
-    /// VerifyPage.xaml 的交互逻辑
+    /// VerifyPage.xaml 的互動邏輯
     /// </summary>
     public partial class VerifyPage : Page
     {

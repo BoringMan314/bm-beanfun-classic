@@ -1,11 +1,11 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Beanfun
 {
     /// <summary>
-    /// AddAccount.xaml 的交互逻辑
+    /// AddAccount.xaml 的互動邏輯
     /// </summary>
     public partial class AddAccount : Window
     {

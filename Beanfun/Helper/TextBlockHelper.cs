@@ -8,7 +8,7 @@ namespace Beanfun
 {
     class TextBlockHelper
     {
-        #region FormattedText Attached dependency property
+        #region FormattedText 附加屬性
 
         public static string GetFormattedText(DependencyObject obj)
         {

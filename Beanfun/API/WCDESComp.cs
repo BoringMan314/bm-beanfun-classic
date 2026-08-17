@@ -6,32 +6,12 @@ namespace Beanfun
 {
     class WCDESComp
     {
-        public static string EncryStrHex(string str, string key)
-        {
-            try
-            {
-                using DES des = DES.Create();
-                des.Mode = CipherMode.ECB;
-                des.Padding = PaddingMode.None;
-                des.Key = Encoding.ASCII.GetBytes(key);
-                byte[] byteArray = Encoding.ASCII.GetBytes(str);
-                ICryptoTransform desencrypt = des.CreateEncryptor();
-                byte[] byteOUT = desencrypt.TransformFinalBlock(byteArray, 0, byteArray.Length);
-                return BitConverter.ToString(byteOUT).Replace("-", "");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("EncryptDESError:" + e.Message + "\n" + e.StackTrace);
-                return null;
-            }
-        }
-
         public static string DecryStrHex(string hexString, string key)
         {
             try
             {
                 using DES des = DES.Create();
-                des.Mode = CipherMode.ECB;
+                des.Mode = CipherMode.ECB; // beanfun OTP 用 DES-ECB
                 des.Padding = PaddingMode.None;
                 des.Key = Encoding.ASCII.GetBytes(key);
                 byte[] byteOUT = new byte[hexString.Length / 2];

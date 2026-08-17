@@ -51,8 +51,6 @@
   >
   <system:String x:Key="Contact">联系开发者</system:String>
   <system:String x:Key="Email">发送邮件</system:String>
-  <system:String x:Key="Feedback">缤放 反馈/建议</system:String>
-  <system:String x:Key="FeedbackText">软件版本: {0}%0d反馈/建议信息:%0d</system:String>
   <system:String x:Key="AccountList">帐号列表</system:String>
   <system:String x:Key="GameChange">更换游戏</system:String>
   <system:String x:Key="GameStart">启动游戏</system:String>
@@ -117,7 +115,6 @@
   >
   <system:String x:Key="MsgDeleteAccountMulti">{0} 个账号</system:String>
   <system:String x:Key="MsgDeleteAccountSingle">账号「{0}」</system:String>
-  <system:String x:Key="RefreshQRCode">重新加载</system:String>
   <system:String x:Key="BackRegularLogin">返回一般登录</system:String>
   <system:String x:Key="Stable">稳定版</system:String>
   <system:String x:Key="Development">测试版</system:String>
@@ -188,10 +185,7 @@
     >添加游戏账号失败, 可能这个游戏无法创建账号。</system:String
   >
   <system:String x:Key="UnknownError">发生未知错误</system:String>
-  <system:String x:Key="CaptchaCode">图形验证码：</system:String>
-  <system:String x:Key="RefreshCaptchaImage">重新载入图形验证码</system:String>
   <system:String x:Key="Confirm">确定</system:String>
-  <system:String x:Key="LoadCaptchaFailed">载入图形验证码失败</system:String>
   <system:String x:Key="EditAccount">编辑账号</system:String>
   <system:String x:Key="EditAccountSave">保存</system:String>
   <system:String x:Key="MsgChangeDisplayNameError">未知错误, 更改游戏账号名失败。</system:String>
@@ -204,7 +198,6 @@
   <system:String x:Key="Heart">心脏</system:String>
   <system:String x:Key="HeartNotice">※卷轴属性套用武器卷</system:String>
   <system:String x:Key="Superior">极真</system:String>
-  <system:String x:Key="Stat_">属性:</system:String>
   <system:String x:Key="Atk_Matk_">攻击力/魔法攻击力:</system:String>
   <system:String x:Key="StarForce">适用</system:String>
   <system:String x:Key="StarForceSplit">星强化（最高</system:String>
@@ -249,13 +242,11 @@
   <system:String x:Key="ServiceAccountInfo">账号详情</system:String>
   <system:String x:Key="SerialNumber">编号</system:String>
   <system:String x:Key="Name">名称</system:String>
-  <system:String x:Key="AuthType">验证方式</system:String>
   <system:String x:Key="Status">状态</system:String>
   <system:String x:Key="Banned">锁定</system:String>
   <system:String x:Key="AccountEstablished">账号已经建立了</system:String>
   <system:String x:Key="Days">天</system:String>
   <system:String x:Key="CreateDate">于 {0} 建立</system:String>
-  <system:String x:Key="LastLoginDate">上次于 {0} 登录</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_1">请您设置一组专门供</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_2">使用的账号及密码</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_3">( 1 )本账号及密码只供「</system:String>
@@ -269,7 +260,6 @@
   <system:String x:Key="UnconnectedGame_AddAccount_9">确认专用于</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_10">昵称:</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_11">( 2~6个中英文字符 )</system:String>
-  <system:String x:Key="UnconnectedGame_AddAccount_12">昵称:</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_13">检查账号</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_14">检查昵称</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_15">我同意并已阅读</system:String>
@@ -331,24 +321,22 @@
   <system:String x:Key="LoginNoViewstateGenerator"
     >登录失败，未找到ViewstateGenerator信息，请检查网络连接。</system:String
   >
-  <system:String x:Key="LoginNoSamplecaptcha"
-    >登录失败，未找到Samplecaptcha信息，请检查网络连接。</system:String
-  >
   <system:String x:Key="LoginNoAkey">登录失败，账号或密码错误。</system:String>
   <system:String x:Key="LoginNoAccountMatch">登录失败，无法获取账号列表。</system:String>
   <system:String x:Key="LoginNoWebtoken">登录失败，登录后无法获取bfWebToken Cookie。</system:String>
   <system:String x:Key="LoginUnknown">登录失败，请稍后再试</system:String>
   <system:String x:Key="LoginNoMethod">登录出错，选择了不存在的登录方式。</system:String>
-  <system:String x:Key="OTPUnknown">获取密码失败，请尝试重新登录。</system:String>
   <system:String x:Key="OTPNoCreateTime">获取账号创建时间失败。</system:String>
   <system:String x:Key="OTPNoSecretCode"
     >获取密码失败，未找到SecretCode信息，请检查网络连接。</system:String
   >
   <system:String x:Key="DecryptOTPError">解密密码失败。</system:String>
+  <system:String x:Key="OTPNoLaunchTicket"
+    >获取密码失败，无法从启动资料解析 LaunchTicket。</system:String
+  >
   <system:String x:Key="MainAccount_Not_Exist"
     >此Beanfun账号不存在，请确认您的Beanfun账号是否成功注册，或者确认账号是否是所在区域为{0}的Beanfun账号。</system:String
   >
-  <system:String x:Key="LoginInitCaptcha">载入图形验证码失败。</system:String>
   <system:String x:Key="GetOtpInitError">获取密码时初始化失败，请检查网络连接。</system:String>
   <system:String x:Key="NeedAuthToPlayGame"
     >很抱歉，需先完成进阶验证，才可启动这款游戏</system:String
@@ -367,9 +355,6 @@
   <system:String x:Key="MsgGameAlreadyRun"
     >游戏已经运行,可能是客户端问题导致未完全结束程序,是否要结束游戏?</system:String
   >
-  <system:String x:Key="MsgLRDoNotSupportCmd"
-    >以非繁体区域设置的系统启动64位游戏的方式不支持非传统登录模式。</system:String
-  >
   <system:String x:Key="MsgLEDoNotSupportXP"
     >以非繁体区域设置的系统启动游戏的方式不支持Windows XP。</system:String
   >
@@ -378,12 +363,6 @@
   >
   <system:String x:Key="MsgLocalePluginReleaseError"
     >释放区域模拟插件错误，请重新启动电脑后再次尝试。</system:String
-  >
-  <system:String x:Key="MsgLEError0xC00700C1"
-    >非繁体区域设置系统的方式启动游戏失败\r\n错误码: {0}\r\n导致这个错误的原因可能是因为使用了游戏的自动更新，导致游戏损坏了。\r\n\r\n解决方案:\r\n- 如果官方有fix更新补丁请下载下来手动覆盖一下游戏\r\n- 如果官方没有fix更新补丁或上面方法无法解决请尝试重新安装游戏\r\n</system:String
-  >
-  <system:String x:Key="MsgLEError"
-    >非繁体区域设置系统的方式启动游戏失败\r\n错误码: {0}\r\n{1}\r\n{2}\r\n如果你有运行任何杀毒软件, 请关闭后再次尝试。\r\n如果仍然显示此窗口, 请尝试以「安全模式」启动程序。如果你进行了以上的尝试仍然没有一个有效，请随时在后面的连接提交问题\r\nhttps://github.com/xupefei/Locale-Emulator/issues\r\n\r\n\r\n你可以按 CTRL+C 将此信息复制到你的剪切板。\r\n</system:String
   >
   <system:String x:Key="MsgBeanfunRejectLogin">您的登录要求已被beanfun! App拒绝。</system:String>
   <system:String x:Key="ClientVersion">客户端版本:</system:String>
@@ -415,21 +394,8 @@
     >Deeplink 尚未取得，请等待二维码加载完成。</system:String
   >
   <system:String x:Key="AdvanceCheckSuccessRetry">验证成功！请再次输入密码登录游戏。</system:String>
-  <system:String x:Key="AdvanceCheckAccountAbnormal"
-    >帐号状态异常，请先使用浏览器登录官网确认（可能需联络客服）</system:String
-  >
-  <system:String x:Key="AdvanceCheckNoCaptchaId"
-    >无法取得验证码编号，帐号可能处于异常状态</system:String
-  >
-  <system:String x:Key="AdvanceCheckCaptchaLoadFailed"
-    >无法载入验证码图片（Session 可能已过期）</system:String
-  >
-  <system:String x:Key="AdvanceCheckFillEmailAndCaptcha">请填写 Email 和验证码</system:String>
   <system:String x:Key="GamePassLogin">GamePass 登录</system:String>
   <system:String x:Key="AccountLoginTitle">账号登录 / 验证</system:String>
-  <system:String x:Key="LoginRecaptchaHint"
-    >系统要求进行「我不是机器人」验证。请在打开的窗口中完成验证并登录。</system:String
-  >
   <system:String x:Key="GamePassWaiting">正在等待 GamePass 认证...</system:String>
   <system:String x:Key="GamePassOpen">开启 GamePass 登录</system:String>
   <system:String x:Key="SessionKeyFailed">无法取得 SessionKey，请稍后再试</system:String>
@@ -438,11 +404,4 @@
     >系统已成功将您的旧版帐号资料自动升级至新格式！&#x0a;您现在可以正常使用所有帐号。</system:String
   >
   <system:String x:Key="LegacyDataMigrateTitle">资料转换成功</system:String>
-  <system:String x:Key="AdvanceCheckTitle">进阶验证</system:String>
-  <system:String x:Key="AdvanceCheckHintPrefix">提示：</system:String>
-  <system:String x:Key="AdvanceCheckInputEmail">请输入认证 Email：</system:String>
-  <system:String x:Key="AdvanceCheckInputPhone">请输入认证电话号码：</system:String>
-  <system:String x:Key="AdvanceCheckCaptchaLabel">图形验证码：</system:String>
-  <system:String x:Key="AdvanceCheckConfirm">确定</system:String>
-  <system:String x:Key="AdvanceCheckCancel">取消</system:String>
 </ResourceDictionary>

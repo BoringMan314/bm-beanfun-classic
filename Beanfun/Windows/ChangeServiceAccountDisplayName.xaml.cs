@@ -1,10 +1,10 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Beanfun
 {
     /// <summary>
-    /// ChangeServiceAccountDisplayName.xaml 的交互逻辑
+    /// ChangeServiceAccountDisplayName.xaml 的互動邏輯
     /// </summary>
     public partial class ChangeServiceAccountDisplayName : Window
     {

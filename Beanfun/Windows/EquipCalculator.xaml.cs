@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 
 namespace Beanfun
 {
     /// <summary>
-    /// EquipCalculator.xaml 的交互逻辑
+    /// EquipCalculator.xaml 的互動邏輯
     /// </summary>
     public partial class EquipCalculator : Window
     {
@@ -647,9 +647,8 @@ namespace Beanfun
             Dictionary<int, int> stats = new Dictionary<int, int>();
             stats.Add(1, 0);
             stats.Add(2, 0);
-            if (superior)
+            if (superior) // 尊貴裝
             {
-                // 尊貴裝
                 switch (starForce)
                 {
                     case 0:
@@ -690,12 +689,9 @@ namespace Beanfun
                         break;
                 }
             }
-            else if (eqpTyp == 0)
+            else if (eqpTyp == 0) // 武器
             {
-                // 武器
-
-                // 屬性
-                int allStats;
+                int allStats; // 屬性
                 if (starForce >= 0 && starForce < 5)
                 {
                     allStats = 2;
@@ -720,8 +716,7 @@ namespace Beanfun
                 stats.Remove(1);
                 stats.Add(1, allStats);
 
-                // 攻擊力
-                if (starForce < 15)
+                if (starForce < 15) // 攻擊力
                 {
                     stats.Remove(2);
                     stats.Add(2, (int)Math.Floor(atk / 50.0D) + 1);
@@ -802,9 +797,8 @@ namespace Beanfun
                     stats.Add(2, value);
                 }
             }
-            else
+            else // 其他裝備
             {
-                // 其他裝備
                 int allStats;
                 if (starForce >= 0 && starForce < 5)
                 {

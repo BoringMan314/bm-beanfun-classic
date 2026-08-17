@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace Beanfun
 {
     /// <summary>
-    /// AccRecovery.xaml 的交互逻辑
+    /// AccRecovery.xaml 的互動邏輯
     /// </summary>
     public partial class AccRecovery : Window
     {

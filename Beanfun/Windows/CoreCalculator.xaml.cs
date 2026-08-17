@@ -6,7 +6,7 @@ using System.Windows;
 namespace Beanfun
 {
     /// <summary>
-    /// CoreCalculator.xaml 的交互逻辑
+    /// CoreCalculator.xaml 的互動邏輯
     /// </summary>
     public partial class CoreCalculator : Window
     {

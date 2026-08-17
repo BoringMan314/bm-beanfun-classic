@@ -9,10 +9,9 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <StartupObject>Beanfun.App</StartupObject>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
-    <!-- CA1416: WPF app is Windows-only; SYSLIB0014: WebClient→HttpClient is a separate refactor -->
+    <!-- 略過 CA1416（僅 Windows）、SYSLIB0014（WebClient 另案重構） -->
     <NoWarn>$(NoWarn);CA1416;SYSLIB0014</NoWarn>
   </PropertyGroup>
 
@@ -26,17 +25,16 @@
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 
-  <!-- WPF Resources (images, fonts, icons) -->
+  <!-- WPF 資源（圖、字型、圖示） -->
   <ItemGroup>
     <None Remove="Resources\**" />
     <Resource Include="Resources\**" />
   </ItemGroup>
 
-  <!-- Exclude files that should not be auto-included -->
+  <!-- 排除不自動納入的檔案 -->
   <ItemGroup>
     <None Remove="LocaleRemulator\**" />
     <Content Remove="LocaleRemulator\**" />
-    <None Remove="WebView2Loader.dll" />
   </ItemGroup>
 
   <!-- Properties\Resources.resx -->
@@ -52,20 +50,7 @@
     </Compile>
   </ItemGroup>
 
-  <!-- Properties\Settings -->
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-
-  <!-- LocaleRemulator embedded resources -->
+  <!-- LocaleRemulator 內嵌資源 -->
   <ItemGroup>
     <EmbeddedResource Include="LocaleRemulator\LRConfig.xml">
       <LogicalName>LRConfig.xml</LogicalName>

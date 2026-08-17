@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 namespace Beanfun
 {
     /// <summary>
-    /// qr_form.xaml 的交互逻辑
+    /// qr_form.xaml 的互動邏輯
     /// </summary>
     public partial class qr_form : Page
     {

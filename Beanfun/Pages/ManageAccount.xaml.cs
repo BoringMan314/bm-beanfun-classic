@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Beanfun
 {
     /// <summary>
-    /// ManagerAccount.xaml 的交互逻辑
+    /// ManagerAccount.xaml 的互動邏輯
     /// </summary>
     public partial class ManageAccount : Page
     {

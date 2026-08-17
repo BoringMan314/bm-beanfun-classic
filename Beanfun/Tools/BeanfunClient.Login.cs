@@ -39,9 +39,8 @@ namespace Beanfun
                 string apiBase = "https://login.beanfun.com";
                 string indexUrl = $"{apiBase}/Login/Index?pSKey={skey}";
 
-                // Step 1: Get index page and antiforgery token
                 SetBaseHeaders(false, "text/html");
-                string indexHtml = this.DownloadString(indexUrl);
+                string indexHtml = this.DownloadString(indexUrl); // 取登入頁與防偽 token
                 string formToken = Regex
                     .Match(indexHtml, "__RequestVerificationToken[^>]+value=\"([^\"]+)\"")
                     .Groups[1]
@@ -59,8 +58,7 @@ namespace Beanfun
                     return null;
                 }
 
-                // Step 2: Check account type
-                SetJsonHeaders(formToken, indexUrl);
+                SetJsonHeaders(formToken, indexUrl); // 查帳號類型
                 string checkTypeBody = new JObject
                 {
                     ["Account"] = id,
@@ -83,8 +81,7 @@ namespace Beanfun
                     captchaToken = checkJson["ResultData"]?["Captcha"]?.ToString() ?? "";
                 }
 
-                // Step 3: Account login
-                SetJsonHeaders(formToken, indexUrl);
+                SetJsonHeaders(formToken, indexUrl); // 帳密登入
                 string loginBody = new JObject
                 {
                     ["Account"] = id,
@@ -112,12 +109,11 @@ namespace Beanfun
                         return null;
                     }
 
-                    // Use SendLogin flow (same as QRCode) to get bfWebToken
                     SetBaseHeaders(
                         true,
                         "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                         indexUrl
-                    );
+                    ); // 與 QR 相同，走 SendLogin 取 bfWebToken
                     string sendLoginHtml = this.DownloadString($"{apiBase}/Login/SendLogin");
 
                     NameValueCollection payload = new NameValueCollection();
@@ -176,17 +172,16 @@ namespace Beanfun
                         return null;
                     }
 
-                    GetAccounts(service_code, service_region, false);
+                    GetAccounts(service_code, service_region);
                     if (this.errmsg != null)
                         return null;
 
                     this.remainPoint = getRemainPoint();
                     this.errmsg = null;
-                    return null; // return null with no errmsg = success, skip LoginCompleted
+                    return null; // errmsg 為空代表成功，略過 LoginCompleted
                 }
 
-                // ResultCode 2: AdvanceCheck required — reuse existing VerifyPage flow
-                if (resultCode == "2")
+                if (resultCode == "2") // 需進階驗證，改走 VerifyPage
                 {
                     if (resultMsg.StartsWith("http"))
                         this.advanceCheckUrl = resultMsg;
@@ -446,8 +441,7 @@ namespace Beanfun
             SetBaseHeaders(false, "text/html");
             string url = $"https://login.beanfun.com/Login/Index?pSKey={skey}";
             string response = this.DownloadString(url);
-            // Extract RequestVerificationToken from login page for QR polling
-            string verificationToken = null;
+            string verificationToken = null; // QR 輪詢要用頁面上的 RequestVerificationToken
             Match tokenMatch = Regex.Match(
                 response,
                 @"__RequestVerificationToken[^>]+value=""([^""]+)"""
@@ -844,8 +838,7 @@ namespace Beanfun
         {
             try
             {
-                // Sync all cookies from WebView2 to BeanfunClient
-                foreach (var cookie in cookies)
+                foreach (var cookie in cookies) // 把 WebView2 cookie 同步進 BeanfunClient
                 {
                     SetCookie(
                         cookie.Name,
@@ -857,7 +850,7 @@ namespace Beanfun
 
                 this.webtoken = webToken;
 
-                GetAccounts(service_code, service_region, false);
+                GetAccounts(service_code, service_region);
                 if (this.errmsg != null)
                     return;
 
@@ -906,7 +899,7 @@ namespace Beanfun
                 this.errmsg = "LoginNoWebtoken";
                 return;
             }
-            GetAccounts(service_code, service_region, false);
+            GetAccounts(service_code, service_region);
 
             if (this.errmsg != null)
                 return;

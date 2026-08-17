@@ -33,7 +33,7 @@ namespace Beanfun
         private void OnClosed(object sender, EventArgs e)
         {
             if (!_loginCompleted)
-                App.MainWnd.bfClient = null;
+                App.MainWnd.bfClient = null; // 未登入完成就關窗，重設用戶端
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -77,7 +77,7 @@ namespace Beanfun
             {
                 await wb_Main.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(
                     BuildAutofillScript(_account, _password)
-                );
+                ); // 自動填帳密
             }
             catch (Exception ex)
             {

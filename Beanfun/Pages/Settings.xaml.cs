@@ -6,7 +6,7 @@ using System.Windows.Controls;
 namespace Beanfun
 {
     /// <summary>
-    /// Settings.xaml 的交互逻辑
+    /// Settings.xaml 的互動邏輯
     /// </summary>
     public partial class Settings : Page
     {

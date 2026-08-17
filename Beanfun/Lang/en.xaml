@@ -61,8 +61,6 @@
   <system:String x:Key="Contact">Contact Developer</system:String>
   <system:String x:Key="Email">Send Email</system:String>
   <system:String x:Key="Back">Back</system:String>
-  <system:String x:Key="Feedback">Beanfun Feedback / Suggestions</system:String>
-  <system:String x:Key="FeedbackText">App version: {0}%0dFeedback / Suggestions:%0d</system:String>
   <system:String x:Key="AccountList">Account List</system:String>
   <system:String x:Key="GameChange">Change Game</system:String>
   <system:String x:Key="GameStart">Start Game</system:String>
@@ -136,7 +134,6 @@
   >
   <system:String x:Key="MsgDeleteAccountMulti">{0} accounts</system:String>
   <system:String x:Key="MsgDeleteAccountSingle">account "{0}"</system:String>
-  <system:String x:Key="RefreshQRCode">Reload</system:String>
   <system:String x:Key="BackRegularLogin">Back to Regular Login</system:String>
   <system:String x:Key="UpdateChannel">Update Channel</system:String>
   <system:String x:Key="Stable">Stable</system:String>
@@ -217,10 +214,7 @@
     >Failed to add game account. This game may not support account creation.</system:String
   >
   <system:String x:Key="UnknownError">An unknown error occurred</system:String>
-  <system:String x:Key="CaptchaCode">CAPTCHA code:</system:String>
-  <system:String x:Key="RefreshCaptchaImage">Reload CAPTCHA image</system:String>
   <system:String x:Key="Confirm">Confirm</system:String>
-  <system:String x:Key="LoadCaptchaFailed">Failed to load CAPTCHA image</system:String>
   <system:String x:Key="EditAccount">Edit Account</system:String>
   <system:String x:Key="EditAccountSave">Save</system:String>
   <system:String x:Key="MsgChangeDisplayNameError"
@@ -239,7 +233,6 @@
   <system:String x:Key="Heart">Heart</system:String>
   <system:String x:Key="HeartNotice">※ Scroll stats follow weapon scrolls</system:String>
   <system:String x:Key="Superior">Superior</system:String>
-  <system:String x:Key="Stat_">Stats:</system:String>
   <system:String x:Key="Atk_Matk_">ATK / MATK:</system:String>
   <system:String x:Key="StarForce">Apply </system:String>
   <system:String x:Key="StarForceSplit">Star Force (up to </system:String>
@@ -302,14 +295,12 @@
   <system:String x:Key="ServiceAccountInfo">Account Details</system:String>
   <system:String x:Key="SerialNumber">Serial No.</system:String>
   <system:String x:Key="Name">Name</system:String>
-  <system:String x:Key="AuthType">Auth Method</system:String>
   <system:String x:Key="Status">Status</system:String>
   <system:String x:Key="Normal">Normal</system:String>
   <system:String x:Key="Banned">Locked</system:String>
   <system:String x:Key="AccountEstablished">Account has been created for</system:String>
   <system:String x:Key="Days"> days</system:String>
   <system:String x:Key="CreateDate">Created on {0}</system:String>
-  <system:String x:Key="LastLoginDate">Last login on {0}</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_1"
     >Please set up a dedicated account and password for </system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_2">.</system:String>
@@ -328,7 +319,6 @@
   <system:String x:Key="UnconnectedGame_AddAccount_9">Confirm for </system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_10">Nickname:</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_11">(2–6 characters)</system:String>
-  <system:String x:Key="UnconnectedGame_AddAccount_12">Nickname:</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_13">Check Account</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_14">Check Nickname</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_15">I agree and have read the</system:String>
@@ -402,9 +392,6 @@
   <system:String x:Key="LoginNoViewstateGenerator"
     >Login failed. ViewstateGenerator not found. Please check your network connection.</system:String
   >
-  <system:String x:Key="LoginNoSamplecaptcha"
-    >Login failed. Samplecaptcha not found. Please check your network connection.</system:String
-  >
   <system:String x:Key="LoginNoAkey">Login failed. Incorrect account or password.</system:String>
   <system:String x:Key="LoginNoAccountMatch"
     >Login failed. Unable to retrieve account list.</system:String
@@ -416,18 +403,17 @@
   <system:String x:Key="LoginNoMethod"
     >Login error. Selected login method does not exist.</system:String
   >
-  <system:String x:Key="OTPUnknown"
-    >Failed to get password. Please try logging in again.</system:String
-  >
   <system:String x:Key="OTPNoCreateTime">Failed to get account creation time.</system:String>
   <system:String x:Key="OTPNoSecretCode"
     >Failed to get password. SecretCode not found. Please check your network connection.</system:String
   >
   <system:String x:Key="DecryptOTPError">Failed to decrypt password.</system:String>
+  <system:String x:Key="OTPNoLaunchTicket"
+    >Failed to get password. Could not parse LaunchTicket from launch data.</system:String
+  >
   <system:String x:Key="MainAccount_Not_Exist"
     >This Beanfun account does not exist. Please verify that your Beanfun account is registered, or check if the account belongs to the {0} region.</system:String
   >
-  <system:String x:Key="LoginInitCaptcha">Failed to load CAPTCHA.</system:String>
   <system:String x:Key="GetOtpInitError"
     >Initialization failed when getting password. Please check your network connection.</system:String
   >
@@ -452,9 +438,6 @@
   <system:String x:Key="MsgGameAlreadyRun"
     >The game is already running. It may not have exited properly. Do you want to terminate it?</system:String
   >
-  <system:String x:Key="MsgLRDoNotSupportCmd"
-    >Launching 64-bit games with locale emulation does not support non-traditional login mode.</system:String
-  >
   <system:String x:Key="MsgLEDoNotSupportXP"
     >Launching games with locale emulation is not supported on Windows XP.</system:String
   >
@@ -463,12 +446,6 @@
   >
   <system:String x:Key="MsgLocalePluginReleaseError"
     >Failed to release locale emulator files. Please restart your computer and try again.</system:String
-  >
-  <system:String x:Key="MsgLEError0xC00700C1"
-    >Failed to launch game with locale emulation.\r\nError code: {0}\r\nThis error may be caused by using the game's auto-update, which corrupted game files.\r\n\r\nSolutions:\r\n- If an official fix patch is available, download and apply it manually.\r\n- If no fix patch is available or the above does not help, try reinstalling the game.\r\n</system:String
-  >
-  <system:String x:Key="MsgLEError"
-    >Failed to launch game with locale emulation.\r\nError code: {0}\r\n{1}\r\n{2}\r\nIf you have any antivirus software running, please disable it and try again.\r\nIf this window still appears, try launching in "Safe Mode". If none of these work, please submit an issue at:\r\nhttps://github.com/xupefei/Locale-Emulator/issues\r\n\r\n\r\nYou can press CTRL+C to copy this message to your clipboard.\r\n</system:String
   >
   <system:String x:Key="MsgBeanfunRejectLogin"
     >Your login request was rejected by the beanfun! App.</system:String
@@ -506,23 +483,8 @@
   <system:String x:Key="AdvanceCheckSuccessRetry"
     >Verification successful! Please enter your password again to log in.</system:String
   >
-  <system:String x:Key="AdvanceCheckAccountAbnormal"
-    >Account status is abnormal. Please log in via browser to check (may need to contact support).</system:String
-  >
-  <system:String x:Key="AdvanceCheckNoCaptchaId"
-    >Unable to retrieve captcha ID. Account may be in an abnormal state.</system:String
-  >
-  <system:String x:Key="AdvanceCheckCaptchaLoadFailed"
-    >Unable to load captcha image (session may have expired).</system:String
-  >
-  <system:String x:Key="AdvanceCheckFillEmailAndCaptcha"
-    >Please fill in both email and captcha code.</system:String
-  >
   <system:String x:Key="GamePassLogin">GamePass Login</system:String>
   <system:String x:Key="AccountLoginTitle">Account Login / Verification</system:String>
-  <system:String x:Key="LoginRecaptchaHint"
-    >Verification is required. Complete the &quot;I'm not a robot&quot; check in the window that opens, then sign in.</system:String
-  >
   <system:String x:Key="GamePassWaiting">Waiting for GamePass authentication...</system:String>
   <system:String x:Key="GamePassOpen">Open GamePass Login</system:String>
   <system:String x:Key="SessionKeyFailed"
@@ -535,11 +497,4 @@
     >Your legacy account data has been successfully upgraded to the new format!&#x0a;You can now use all your accounts normally.</system:String
   >
   <system:String x:Key="LegacyDataMigrateTitle">Data Migration Successful</system:String>
-  <system:String x:Key="AdvanceCheckTitle">Advanced Verification</system:String>
-  <system:String x:Key="AdvanceCheckHintPrefix">Hint: </system:String>
-  <system:String x:Key="AdvanceCheckInputEmail">Enter verification Email:</system:String>
-  <system:String x:Key="AdvanceCheckInputPhone">Enter verification phone number:</system:String>
-  <system:String x:Key="AdvanceCheckCaptchaLabel">Captcha:</system:String>
-  <system:String x:Key="AdvanceCheckConfirm">Confirm</system:String>
-  <system:String x:Key="AdvanceCheckCancel">Cancel</system:String>
 </ResourceDictionary>

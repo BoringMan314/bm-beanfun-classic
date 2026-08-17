@@ -8,12 +8,11 @@ using System.Windows.Media;
 namespace Beanfun
 {
     /// <summary>
-    /// AccountList.xaml 的交互逻辑
+    /// AccountList.xaml 的互動邏輯
     /// </summary>
     public partial class AccountList : Page
     {
-        // drag and drop related variables
-        private Point _dragStartPoint;
+        private Point _dragStartPoint; // 拖放起點
         private bool _isHandlePressed = false;
         private ListBoxItem _draggedItem = null;
         private int _draggedIndex = -1;
@@ -255,16 +254,15 @@ namespace Beanfun
             new WebBrowser("https://m.beanfun.com/Deposite").Show();
         }
 
-        #region Drag and Drop Reorder
+        #region 拖放排序
 
         private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _dragStartPoint = e.GetPosition(null);
             _isHandlePressed = false;
 
-            // get the clicked ListBoxItem
             var listBox = sender as ListBox;
-            var item = FindAncestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+            var item = FindAncestor<ListBoxItem>((DependencyObject)e.OriginalSource); // 點到的項目
 
             if (item != null)
             {
@@ -300,11 +298,10 @@ namespace Beanfun
             Point currentPosition = e.GetPosition(null);
             Vector diff = _dragStartPoint - currentPosition;
 
-            // check if the distance is enough to start dragging
             if (
                 Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance
                 || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance
-            )
+            ) // 位移夠了才開始拖
             {
                 var listBox = sender as ListBox;
                 var data = listBox.ItemContainerGenerator.ItemFromContainer(_draggedItem);
@@ -350,10 +347,9 @@ namespace Beanfun
                     if (container == targetItem && container != _draggedItem)
                     {
                         container.BorderBrush = new SolidColorBrush(Colors.DodgerBlue);
-                        // Show border on top or bottom based on cursor position
                         container.BorderThickness = isLowerHalf
                             ? new Thickness(0, 0, 0, 2)
-                            : new Thickness(0, 2, 0, 0);
+                            : new Thickness(0, 2, 0, 0); // 游標在下半顯示底線，否則頂線
                     }
                     else
                     {
@@ -385,17 +381,15 @@ namespace Beanfun
             {
                 targetIndex = listBox.ItemContainerGenerator.IndexFromContainer(targetItem);
 
-                // Check if dropping on the lower half of the item
                 Point itemPosition = e.GetPosition(targetItem);
-                if (itemPosition.Y > targetItem.ActualHeight / 2)
+                if (itemPosition.Y > targetItem.ActualHeight / 2) // 落在下半則插到該項之後
                 {
                     insertAfter = true;
                 }
             }
             else
             {
-                // if there is no target item, put it at the end
-                targetIndex = listBox.Items.Count;
+                targetIndex = listBox.Items.Count; // 沒對到項目則放到最後
                 insertAfter = false;
             }
 
@@ -409,15 +403,13 @@ namespace Beanfun
                 }
             }
 
-            // perform reordering
             if (_draggedIndex != -1 && targetIndex != -1)
             {
                 int finalIndex = targetIndex;
                 if (insertAfter)
                     finalIndex++;
 
-                // Skip if dropping at the same position
-                if (_draggedIndex == finalIndex || _draggedIndex == finalIndex - 1 && insertAfter)
+                if (_draggedIndex == finalIndex || _draggedIndex == finalIndex - 1 && insertAfter) // 位置沒變則略過
                 {
                     _draggedItem = null;
                     _draggedIndex = -1;
@@ -428,12 +420,10 @@ namespace Beanfun
                 var item = accountList[_draggedIndex];
                 accountList.RemoveAt(_draggedIndex);
 
-                // Adjust index after removal
-                if (_draggedIndex < finalIndex)
+                if (_draggedIndex < finalIndex) // 先刪前面的項，後面索引要減 1
                     finalIndex--;
 
-                // Clamp to valid range
-                if (finalIndex > accountList.Count)
+                if (finalIndex > accountList.Count) // 限制在合法範圍
                     finalIndex = accountList.Count;
                 if (finalIndex < 0)
                     finalIndex = 0;
@@ -472,10 +462,7 @@ namespace Beanfun
             return null;
         }
 
-        /// <summary>
-        /// Save the current game's account sorting order
-        /// </summary>
-        private void SaveAccountOrder()
+        private void SaveAccountOrder() // 儲存目前遊戲的帳號排序
         {
             if (App.MainWnd?.bfClient?.accountList == null)
                 return;
@@ -487,10 +474,7 @@ namespace Beanfun
             ConfigAppSettings.SetValue("AccountOrder_" + gameCode, orderString);
         }
 
-        /// <summary>
-        /// Reorder the account list based on the saved order
-        /// </summary>
-        public static void ApplyAccountOrder(
+        public static void ApplyAccountOrder( // 依已存順序重排帳號清單
             List<BeanfunClient.ServiceAccount> accountList,
             string gameCode
         )
@@ -501,16 +485,14 @@ namespace Beanfun
 
             string[] orderArray = orderString.Split(',');
 
-            // create a dictionary to quickly find the account
-            var accountDict = new Dictionary<string, BeanfunClient.ServiceAccount>();
+            var accountDict = new Dictionary<string, BeanfunClient.ServiceAccount>(); // 以 sid 對帳號
             foreach (var account in accountList)
             {
                 if (!accountDict.ContainsKey(account.sid))
                     accountDict[account.sid] = account;
             }
 
-            // reorder the account list based on the saved order
-            var orderedList = new List<BeanfunClient.ServiceAccount>();
+            var orderedList = new List<BeanfunClient.ServiceAccount>(); // 依已存順序重排
             foreach (string sid in orderArray)
             {
                 if (accountDict.ContainsKey(sid))
@@ -520,14 +502,12 @@ namespace Beanfun
                 }
             }
 
-            // add the accounts that are not in the order to the end
-            foreach (var account in accountDict.Values)
+            foreach (var account in accountDict.Values) // 不在順序裡的接到最後
             {
                 orderedList.Add(account);
             }
 
-            // update the original list
-            accountList.Clear();
+            accountList.Clear(); // 寫回原清單
             accountList.AddRange(orderedList);
         }
 

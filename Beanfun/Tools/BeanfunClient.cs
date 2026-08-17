@@ -51,14 +51,6 @@ namespace Beanfun
             this.Timeout = 30 * 1000;
         }
 
-        public string DownloadString(string Uri, Encoding Encoding)
-        {
-            this.Headers.Set("User-Agent", userAgent);
-            this.Headers.Set("Accept-Encoding", "identity");
-            var ret = (Encoding.GetString(base.DownloadData(Uri)));
-            return ret;
-        }
-
         public new string DownloadString(string Uri)
         {
             this.Headers.Set("User-Agent", userAgent);

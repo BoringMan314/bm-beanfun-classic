@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,7 +6,7 @@ using System.Windows.Input;
 namespace Beanfun
 {
     /// <summary>
-    /// LoginTotp.xaml 的交互逻辑
+    /// LoginTotp.xaml 的互動邏輯
     /// </summary>
     public partial class LoginTotp : Page
     {
@@ -90,8 +90,7 @@ namespace Beanfun
             var box = sender as TextBox;
             int index = System.Array.IndexOf(_otpBoxes, box);
 
-            // Filter non-digit
-            string digits = new string(box.Text.Where(char.IsDigit).ToArray());
+            string digits = new string(box.Text.Where(char.IsDigit).ToArray()); // 只留數字
             if (digits != box.Text)
             {
                 box.Text = digits;

@@ -7,7 +7,7 @@ using Microsoft.Web.WebView2.Core;
 namespace Beanfun
 {
     /// <summary>
-    /// WebBrowser.xaml 的交互逻辑
+    /// WebBrowser.xaml 的互動邏輯
     /// </summary>
     public partial class WebBrowser : Window
     {

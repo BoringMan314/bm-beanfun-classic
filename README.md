@@ -71,18 +71,18 @@
 
 ### 發佈流程 (CI/CD)
 
-本專案版號採手動指定，目前固定為 `5.9.2.1`。如需改版，請先更新 `Beanfun/Properties/AssemblyInfo.cs` 與 `.github/workflows/build-and-release.yml` 內的版本值，再至 GitHub 的 [Actions 頁面](../../actions/workflows/build-and-release.yml) 手動觸發 **Build and Release** workflow。
+本專案版號採手動指定，目前固定為 `5.9.2.2`。如需改版，請先更新 `Beanfun/Properties/AssemblyInfo.cs` 與 `.github/workflows/build-and-release.yml` 內的版本值，再至 GitHub 的 [Actions 頁面](../../actions/workflows/build-and-release.yml) 手動觸發 **Build and Release** workflow。
 
 #### 發佈參數說明
 
 | 參數 | 說明 | 預設值 |
 |------|------|--------|
 | `release_type` | `release`（正式版）或 `prerelease`（測試版） | `prerelease` |
-| `release_name` | 自訂發佈名稱（留空使用 `v5.9.2.1`） | 空 |
+| `release_name` | 自訂發佈名稱（留空使用 `v5.9.2.2`） | 空 |
 
 #### 版本控制機制
 
-版本不再自動計算，也不使用 timestamp。Release tag 採固定四段式，例如 `v5.9.2.1`。
+版本不再自動計算，也不使用 timestamp。Release tag 採固定四段式，例如 `v5.9.2.2`。
 
 ### 程式碼格式化
 

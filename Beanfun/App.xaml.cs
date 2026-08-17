@@ -2,9 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -12,18 +9,14 @@ using System.Windows.Media;
 namespace Beanfun
 {
     /// <summary>
-    /// App.xaml 的交互逻辑
+    /// App.xaml 的互動邏輯
     /// </summary>
     public partial class App : Application
     {
         public static readonly Version OSVersion = Environment.OSVersion.Version;
-        public static readonly Version Win2000 = new Version(5, 0);
-        public static readonly Version WinXP = new Version(5, 1);
-        public static readonly Version Win2003 = new Version(5, 2);
         public static readonly Version WinVista = new Version(6, 0);
         public static readonly Version Win7 = new Version(6, 1);
         public static readonly Version Win8 = new Version(6, 2);
-        public static readonly Version Win8_1 = new Version(6, 3);
         public static readonly Version Win10 = new Version(10, 0);
         public static readonly Version Win11 = new Version(10, 0, 22000, 0);
 
@@ -54,18 +47,6 @@ namespace Beanfun
             StartupUri = new Uri("MainWindow.xaml", UriKind.RelativeOrAbsolute);
         }
 
-        public bool compareFile(string path1, string path2)
-        {
-            using var hash = MD5.Create();
-            using var stream_1 = File.OpenRead(path1);
-            byte[] hashByte_1 = hash.ComputeHash(stream_1);
-
-            using var stream_2 = File.OpenRead(path2);
-            byte[] hashByte_2 = hash.ComputeHash(stream_2);
-
-            return BitConverter.ToString(hashByte_1) == BitConverter.ToString(hashByte_2);
-        }
-
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             if (MainWnd != null && MainWnd.bfClient != null)
@@ -76,7 +57,6 @@ namespace Beanfun
                 catch { }
         }
 
-        // --- 版本轉換邏輯 (處理幽靈點問題) ---
         public static string ConvertVersion(Version version)
         {
             if (version < new Version(4, 1))
@@ -88,15 +68,12 @@ namespace Beanfun
 
             string timestamp = buildDate.ToString("yyMMddHHmm");
 
-            // 關鍵：如果 Build < 1000 代表係 Patch 號碼
-            if (version.Build < 1000)
+            if (version.Build < 1000) // Build < 1000 視為修補號，不是日期戳
             {
-                // 格式: 5.8.3(2604011114)
                 return $"{version.Major}.{version.Minor}.{version.Build}({timestamp})";
             }
             else
             {
-                // 格式: 5.8(2604011114)
                 return $"{version.Major}.{version.Minor}({timestamp})";
             }
         }
@@ -163,43 +140,6 @@ namespace Beanfun
                 }
             }
             return -1;
-        }
-
-        public static string GetMD5HashFromFile(string fileName)
-        {
-            try
-            {
-                using FileStream file = new FileStream(
-                    fileName,
-                    FileMode.Open,
-                    FileAccess.Read,
-                    FileShare.ReadWrite
-                );
-                return GetMD5HashFromStream(file);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("GetMD5HashFromFile() fail, error: " + ex.Message);
-            }
-        }
-
-        public static string GetMD5HashFromStream(Stream stream)
-        {
-            try
-            {
-                using MD5 md5 = MD5.Create();
-                byte[] retVal = md5.ComputeHash(stream);
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < retVal.Length; i++)
-                {
-                    sb.Append(retVal[i].ToString("x2"));
-                }
-                return sb.ToString();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("GetMD5HashFromStream() fail, error: " + ex.Message);
-            }
         }
     }
 }

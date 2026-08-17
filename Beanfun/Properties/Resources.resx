@@ -121,40 +121,4 @@
   <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_Black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_JD" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_JD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_Other" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_Other.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_Red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_V" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_V.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_X" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_X.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_BM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_BM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_SM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_SM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scroll_Glory" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scroll_Glory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="segmdl2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\segmdl2.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="QRCode_Tip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\QRCode_Tip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -45,12 +46,10 @@ namespace Beanfun.Update
 
         private static string DiscoverProxy()
         {
-            // Test direct GitHub access first
-            if (TryProbe("https://api.github.com"))
+            if (TryProbe("https://api.github.com")) // 先測直連 GitHub
                 return "";
 
-            // Direct access failed, try proxies
-            foreach (var proxy in GH_PROXIES)
+            foreach (var proxy in GH_PROXIES) // 直連失敗再試 proxy
             {
                 if (TryProbe(proxy + "https://api.github.com"))
                     return proxy;
@@ -60,6 +59,34 @@ namespace Beanfun.Update
         }
 
         private static string GetProxy() => _cachedProxy.Value;
+
+        internal static string TryDownloadGitHubText(string githubUrl, int timeoutMs = 5000)
+        {
+            if (string.IsNullOrEmpty(githubUrl))
+                return null;
+
+            var prefixes = new List<string> { "" };
+            prefixes.AddRange(GH_PROXIES);
+            foreach (string prefix in prefixes)
+            {
+                try
+                {
+                    var req = (HttpWebRequest)WebRequest.Create(prefix + githubUrl); // 獨立請求，不沿用 beanfun cookies
+                    req.Method = "GET";
+                    req.Timeout = timeoutMs; // 短逾時
+                    req.ReadWriteTimeout = timeoutMs;
+                    req.UserAgent = $"BeanfunClassic(V{App.AssemblyVersion})";
+                    using var resp = (HttpWebResponse)req.GetResponse();
+                    using var stream = resp.GetResponseStream();
+                    if (stream == null)
+                        continue;
+                    using var reader = new StreamReader(stream);
+                    return reader.ReadToEnd();
+                }
+                catch { } // 改試下一個來源
+            }
+            return null;
+        }
 
         public class GitHubRelease
         {
@@ -89,9 +116,8 @@ namespace Beanfun.Update
 
         internal static void CheckApplicationUpdate(bool show)
         {
-            // Prevent concurrent checks (e.g. startup probe + About-page click collision).
             if (Interlocked.CompareExchange(ref _checkRunning, 1, 0) != 0)
-                return;
+                return; // 避免啟動檢查與關於頁重複觸發
 
             var thread = new Thread(() =>
             {
@@ -131,8 +157,7 @@ namespace Beanfun.Update
                     if (release == null)
                         return;
 
-                    // 1. 解析遠端 Tag (格式: vMajor.Minor.Patch.Revision)
-                    var match = Regex.Match(release.TagName, @"^v(\d+)\.(\d+)\.(\d+)\.(\d+)$");
+                    var match = Regex.Match(release.TagName, @"^v(\d+)\.(\d+)\.(\d+)\.(\d+)$"); // tag 如 v5.9.2.2
                     if (!match.Success)
                         return;
 
@@ -215,10 +240,6 @@ namespace Beanfun.Update
             return null;
         }
 
-        /// <summary>
-        /// 比較版本號。將 Major, Minor, Patch 全部補齊 3 位後與 Timestamp 拼接進行 Long 比較。
-        /// 確保 5.8.9 < 5.8.10 且 Timestamp 格式永遠大於舊版。
-        /// </summary>
         private static bool IsNewerVersion(
             string localVer,
             string major,

@@ -1,10 +1,10 @@
-﻿using System.IO;
+using System.IO;
 using System.Windows;
 
 namespace Beanfun
 {
     /// <summary>
-    /// MapleTools.xaml 的交互逻辑
+    /// MapleTools.xaml 的互動邏輯
     /// </summary>
     public partial class MapleTools : Window
     {
@@ -25,7 +25,6 @@ namespace Beanfun
         {
             if (App.LoginRegion == "HK")
                 MessageBox.Show(TryFindResource("MsgPlayerReport") as string);
-            //new WebBrowser("https://event.beanfun.com/customerservice/PluginReporting/PluginBoard/PluginBoardJQ.aspx").Show();
             new WebBrowser(
                 "https://event.beanfun.com/customerservice/PluginReporting/PlayerReport.aspx"
             ).Show();
@@ -82,8 +81,7 @@ namespace Beanfun
                 catch { }
             }
 
-            // 清理更新失敗的緩存
-            foreach (DirectoryInfo di in gameDir.GetDirectories())
+            foreach (DirectoryInfo di in gameDir.GetDirectories()) // 刪更新失敗的快取資料夾
             {
                 try
                 {
@@ -93,8 +91,7 @@ namespace Beanfun
                 catch { }
             }
 
-            // 清理報錯的檔案和多餘dll
-            foreach (FileInfo fi in gameDir.GetFiles())
+            foreach (FileInfo fi in gameDir.GetFiles()) // 刪傾印與多餘 DLL
             {
                 try
                 {

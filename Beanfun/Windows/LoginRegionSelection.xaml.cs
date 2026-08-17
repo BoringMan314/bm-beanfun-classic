@@ -1,10 +1,10 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Beanfun
 {
     /// <summary>
-    /// LoginRegionSelection.xaml 的交互逻辑
+    /// LoginRegionSelection.xaml 的互動邏輯
     /// </summary>
     public partial class LoginRegionSelection : Window
     {

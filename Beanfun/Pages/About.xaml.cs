@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace Beanfun
 {
     /// <summary>
-    /// About.xaml 的交互逻辑
+    /// About.xaml 的互動邏輯
     /// </summary>
     public partial class About : Page
     {
@@ -65,8 +65,7 @@ namespace Beanfun
 
         private void Github_Click(object sender, RoutedEventArgs e)
         {
-            // Fix for .NET 8
-            System.Diagnostics.Process.Start(
+            System.Diagnostics.Process.Start( // .NET 8 需 UseShellExecute 才能開網址
                 new System.Diagnostics.ProcessStartInfo
                 {
                     FileName = "https://github.com/BoringMan314/bm-beanfun-classic/issues/new",

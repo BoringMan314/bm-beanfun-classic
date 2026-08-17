@@ -1,9 +1,9 @@
-﻿using System.Windows;
+using System.Windows;
 
 namespace Beanfun
 {
     /// <summary>
-    /// KartTools.xaml 的交互逻辑
+    /// KartTools.xaml 的互動邏輯
     /// </summary>
     public partial class KartTools : Window
     {

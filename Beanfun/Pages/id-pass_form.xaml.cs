@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,7 +6,7 @@ using System.Windows.Controls;
 namespace Beanfun
 {
     /// <summary>
-    /// id_pass_form.xaml 的交互逻辑
+    /// id_pass_form.xaml 的互動邏輯
     /// </summary>
     public partial class id_pass_form : Page
     {
@@ -77,7 +77,6 @@ namespace Beanfun
                 MessageBox.Show(TryFindResource("PasswordNeed") as string);
                 return;
             }
-            //System.Console.WriteLine("PW" + t_Password.Password);
             App.MainWnd.do_Login();
         }
 

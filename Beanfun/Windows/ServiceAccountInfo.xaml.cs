@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,7 +6,7 @@ using System.Windows.Media;
 namespace Beanfun
 {
     /// <summary>
-    /// ServiceAccountInfo.xaml 的交互逻辑
+    /// ServiceAccountInfo.xaml 的互動邏輯
     /// </summary>
     public partial class ServiceAccountInfo : Window
     {
@@ -22,14 +22,6 @@ namespace Beanfun
             t_status.Foreground = new SolidColorBrush(
                 (Color)ColorConverter.ConvertFromString(account.isEnable ? "Green" : "Red")
             );
-            if (account.sauthtype == null)
-            {
-                p_sauthtype.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                t_sauthtype.Text = account.sauthtype;
-            }
             if (account.screatetime == null)
             {
                 p_screatetime.Visibility = Visibility.Collapsed;
@@ -41,17 +33,6 @@ namespace Beanfun
                     account.screatetime
                 );
                 t_screatedays.Content = getDays(account.screatetime);
-            }
-            if (account.slastusedtime == null)
-            {
-                p_slastusedtime.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                t_slastusedtime.Content = string.Format(
-                    TryFindResource("LastLoginDate") as string,
-                    account.slastusedtime
-                );
             }
         }
 

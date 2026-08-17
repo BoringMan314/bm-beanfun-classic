@@ -10,14 +10,10 @@ namespace Beanfun
         public class ServiceAccount
         {
             public bool isEnable { get; set; }
-            public bool visible { get; set; }
-            public bool isinherited { get; set; }
             public string sid { get; set; }
             public string ssn { get; set; }
             public string sname { get; set; }
             public string screatetime { get; set; }
-            public string slastusedtime { get; set; }
-            public string sauthtype { get; set; }
 
             public ServiceAccount(
                 bool isEnable,
@@ -28,41 +24,14 @@ namespace Beanfun
             )
             {
                 this.isEnable = isEnable;
-                this.visible = true;
-                this.isinherited = false;
                 this.sid = sid;
                 this.ssn = ssn;
                 this.sname = sname;
                 this.screatetime = screatetime;
-                this.slastusedtime = null;
-                this.sauthtype = null;
-            }
-
-            public ServiceAccount(
-                bool isEnable,
-                bool visible,
-                bool isinherited,
-                string sid,
-                string ssn,
-                string sname,
-                string screatetime,
-                string slastusedtime,
-                string sauthtype
-            )
-            {
-                this.isEnable = isEnable;
-                this.visible = visible;
-                this.isinherited = isinherited;
-                this.sid = sid;
-                this.ssn = ssn;
-                this.sname = sname;
-                this.screatetime = screatetime;
-                this.slastusedtime = slastusedtime;
-                this.sauthtype = sauthtype;
             }
         }
 
-        public void GetAccounts(string service_code, string service_region, bool fatal = true)
+        public void GetAccounts(string service_code, string service_region)
         {
             if (this.WebToken == null)
                 return;
@@ -83,11 +52,10 @@ namespace Beanfun
                 $"https://{host}/beanfun_block/game_zone/game_server_account_list.aspx?sc={service_code}&sr={service_region}&dt={GetCurrentTime(2)}"
             );
 
-            // Add account list to ListView.
             regex = new Regex(
                 "onclick=\"([^\"]*)\"><div id=\"(\\w+)\" sn=\"(\\d+)\" name=\"([^\"]+)\""
             );
-            this.accountList.Clear();
+            this.accountList.Clear(); // 解析帳號清單
             foreach (Match match in regex.Matches(response))
             {
                 if (
@@ -126,17 +94,15 @@ namespace Beanfun
 
             if (this.accountList.Count > 0)
             {
-                // sort by ssn as default order
-                this.accountList.Sort(
+                this.accountList.Sort( // 預設依 ssn 排序
                     (x, y) =>
                     {
                         return x.ssn.CompareTo(y.ssn);
                     }
                 );
 
-                // then apply the user-defined order
                 string gameCode = service_code + "_" + service_region;
-                AccountList.ApplyAccountOrder(this.accountList, gameCode);
+                AccountList.ApplyAccountOrder(this.accountList, gameCode); // 套用使用者自訂順序
             }
 
             this.errmsg = null;

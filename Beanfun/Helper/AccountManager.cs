@@ -1,14 +1,4 @@
-/*
- * 開發此功能主要用為多帳號時儲存
- * 以原有加解密寫法為基礎
- * 加上一層wrapper並用Serializable方式儲存資料
- * thanks to Stackoverflow :p
- * http://stackoverflow.com/questions/5869922/c-sharp-encrypt-serialized-file-before-writing-to-disk
- * http://stackoverflow.com/questions/16352879/write-list-of-objects-to-a-file
- *
- * Date: 2016/3/1
- * Author: 葉家郡 (a.k.a 某數)
- */
+// 多帳號紀錄的加解密儲存（JSON；舊檔為 BinaryFormatter）
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -75,7 +65,7 @@ namespace Beanfun
             return loadRecord();
         }
 
-        #region helper function
+        #region 輔助方法
         private void accRecInit()
         {
             if (accountRecords == null)
@@ -176,14 +166,12 @@ namespace Beanfun
             {
                 try
                 {
-                    // 嘗試以新版 JSON 格式讀取資料
-                    accountRecords = JsonConvert.DeserializeObject<Records>(raw);
+                    accountRecords = JsonConvert.DeserializeObject<Records>(raw); // 新版 JSON
                 }
                 catch
                 {
                     accountRecords = null;
-                    // 解析失敗時，自動視為舊版 BinaryFormatter 格式並嘗試進行無縫轉換
-                    TryAutoMigrateLegacyData(raw);
+                    TryAutoMigrateLegacyData(raw); // JSON 失敗則當舊版 BinaryFormatter
                 }
             }
             accRecInit();
@@ -199,12 +187,8 @@ namespace Beanfun
         }
         #endregion
 
-        #region rawdata IO
-        /*
-         * read ciphertext from File
-         * decrypt it and return
-         */
-        private string readRawData()
+        #region 帳號檔讀寫
+        private string readRawData() // 讀出並解密帳號檔
         {
             try
             {
@@ -237,11 +221,7 @@ namespace Beanfun
             }
         }
 
-        /*
-         * encrypt plaintext and store to File
-         * and save key in Program Setting
-         */
-        private void writeRawData(string plaintext)
+        private void writeRawData(string plaintext) // 加密後寫入帳號檔
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(dataPath, FileMode.Create)))
             {
@@ -267,7 +247,7 @@ namespace Beanfun
         }
         #endregion
 
-        #region Interface
+        #region 對外介面
         public bool addAccount(
             string region,
             string account,
@@ -448,11 +428,6 @@ namespace Beanfun
             return false;
         }
 
-        public string[] getAccountList()
-        {
-            return accountRecords.accountList.ToArray();
-        }
-
         public string[] getAccountList(string region)
         {
             List<string> accList = new List<string>();
@@ -477,8 +452,7 @@ namespace Beanfun
             }
             catch
             {
-                // 匯入失敗時，嘗試將其視為舊版格式進行轉換
-                return TryAutoMigrateLegacyData(raw);
+                return TryAutoMigrateLegacyData(raw); // 匯入 JSON 失敗則轉舊版
             }
         }
 
@@ -488,10 +462,8 @@ namespace Beanfun
         }
         #endregion
 
-        #region Legacy format migration
-        // Fix #182: 實作內建的舊版資料自動升級機制，取代原先會導致 404 的外部轉換工具
-        // TODO: 此升級機制僅為過渡用途。建議於發布幾個版本後，確認多數活躍玩家皆已轉換至 JSON 格式時，將此方法徹底移除。
-        private bool TryAutoMigrateLegacyData(string raw)
+        #region 舊版格式轉換
+        private bool TryAutoMigrateLegacyData(string raw) // 將舊版 BinaryFormatter 帳號檔升成 JSON
         {
             try
             {
@@ -506,9 +478,7 @@ namespace Beanfun
                 }
                 using (var stream = new MemoryStream(cipher))
                 {
-                    // 忽略編譯器針對 BinaryFormatter 的安全性警告
-                    // 注意：此類別極度不安全，僅限於此處讀取舊版資料使用，新代碼嚴禁使用！
-#pragma warning disable SYSLIB0011
+#pragma warning disable SYSLIB0011 // 僅此處讀舊版 BinaryFormatter
                     var bformatter =
                         new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                     object oldRecords = bformatter.Deserialize(stream);
@@ -516,14 +486,13 @@ namespace Beanfun
 
                     if (oldRecords != null)
                     {
-                        // 透過 JSON 序列化作為中介，避免類別轉型 (Casting) 發生例外狀況
-                        string tempJson = JsonConvert.SerializeObject(oldRecords);
+                        string tempJson = JsonConvert.SerializeObject(oldRecords); // 經 JSON 避開舊型別轉型
                         accountRecords = JsonConvert.DeserializeObject<Records>(tempJson);
 
                         if (accountRecords != null)
                         {
                             accRecInit();
-                            storeRecord(); // 立即將轉換後的資料以最新 JSON 格式寫入，覆寫舊檔
+                            storeRecord(); // 立刻以 JSON 覆寫舊檔
 
                             log.Info("Legacy account data auto-migrated to JSON format.");
                             System.Windows.MessageBox.Show(
@@ -543,8 +512,7 @@ namespace Beanfun
             }
             catch (Exception ex)
             {
-                // 若因 .NET 版本限制或資料損毀導致轉換失敗，則記錄錯誤，並讓 accRecInit 建立新的空白紀錄
-                log.Error($"Auto-migration of legacy data failed: {ex.Message}");
+                log.Error($"Auto-migration of legacy data failed: {ex.Message}"); // 轉換失敗則交由 accRecInit 建空白紀錄
             }
 
             return false;

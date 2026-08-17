@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 namespace Beanfun
 {
     /// <summary>
-    /// GameList.xaml 的交互逻辑
+    /// GameList.xaml 的互動邏輯
     /// </summary>
     public partial class GameList : Window
     {

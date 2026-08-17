@@ -46,8 +46,6 @@
   <system:String x:Key="Contact">聯繫開發者</system:String>
   <system:String x:Key="Email">發送電郵</system:String>
   <system:String x:Key="Back">返回</system:String>
-  <system:String x:Key="Feedback">繽放 反饋/建議</system:String>
-  <system:String x:Key="FeedbackText">軟體版本: {0}%0d反饋/建議訊息:%0d</system:String>
   <system:String x:Key="AccountList">帳號選單</system:String>
   <system:String x:Key="GameChange">更換遊戲</system:String>
   <system:String x:Key="GameStart">啟動遊戲</system:String>
@@ -119,7 +117,6 @@
   >
   <system:String x:Key="MsgDeleteAccountMulti">{0} 個帳號</system:String>
   <system:String x:Key="MsgDeleteAccountSingle">帳號「{0}」</system:String>
-  <system:String x:Key="RefreshQRCode">重新加載</system:String>
   <system:String x:Key="BackRegularLogin">返回一般登入</system:String>
   <system:String x:Key="UpdateChannel">更新通道</system:String>
   <system:String x:Key="Stable">穩定版</system:String>
@@ -192,10 +189,7 @@
     >新增遊戲帳號失敗, 可能這個遊戲無法創建帳號。</system:String
   >
   <system:String x:Key="UnknownError">發生未知錯誤</system:String>
-  <system:String x:Key="CaptchaCode">圖形驗證碼：</system:String>
-  <system:String x:Key="RefreshCaptchaImage">重新載入圖形驗證碼</system:String>
   <system:String x:Key="Confirm">確認</system:String>
-  <system:String x:Key="LoadCaptchaFailed">載入圖形驗證碼失敗</system:String>
   <system:String x:Key="EditAccount">變更帳號</system:String>
   <system:String x:Key="EditAccountSave">變更</system:String>
   <system:String x:Key="MsgChangeDisplayNameError">未知錯誤, 更變遊戲帳號名失敗。</system:String>
@@ -211,7 +205,6 @@
   <system:String x:Key="Heart">心臟</system:String>
   <system:String x:Key="HeartNotice">※卷軸素質套用武器卷</system:String>
   <system:String x:Key="Superior">尊貴</system:String>
-  <system:String x:Key="Stat_">屬性:</system:String>
   <system:String x:Key="Atk_Matk_">攻擊力/魔力:</system:String>
   <system:String x:Key="StarForce">套用 </system:String>
   <system:String x:Key="StarForceSplit">星強化（最多　</system:String>
@@ -270,14 +263,12 @@
   <system:String x:Key="ServiceAccountInfo">帳號詳情</system:String>
   <system:String x:Key="SerialNumber">編號</system:String>
   <system:String x:Key="Name">名稱</system:String>
-  <system:String x:Key="AuthType">認證方式</system:String>
   <system:String x:Key="Status">狀態</system:String>
   <system:String x:Key="Normal">正常</system:String>
   <system:String x:Key="Banned">鎖定</system:String>
   <system:String x:Key="AccountEstablished">帳號已經建立了</system:String>
   <system:String x:Key="Days">日</system:String>
   <system:String x:Key="CreateDate">於 {0} 建立</system:String>
-  <system:String x:Key="LastLoginDate">上次於 {0} 登入</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_1">請您設定一組專門供 </system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_2">使用的帳號及密碼</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_3">( 1 )本帳號及密碼只供「</system:String>
@@ -291,7 +282,6 @@
   <system:String x:Key="UnconnectedGame_AddAccount_9">確認專用於</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_10">暱稱:</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_11">( 2~6個中英文字元 )</system:String>
-  <system:String x:Key="UnconnectedGame_AddAccount_12">暱稱:</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_13">檢查帳號</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_14">檢查暱稱</system:String>
   <system:String x:Key="UnconnectedGame_AddAccount_15">我同意並已閱讀</system:String>
@@ -353,24 +343,22 @@
   <system:String x:Key="LoginNoViewstateGenerator"
     >登入失敗，未找到ViewstateGenerator訊息，請檢查網絡連線。</system:String
   >
-  <system:String x:Key="LoginNoSamplecaptcha"
-    >登入失敗，未找到Samplecaptcha訊息，請檢查網絡連線。</system:String
-  >
   <system:String x:Key="LoginNoAkey">登入失敗，帳號或密碼錯誤。</system:String>
   <system:String x:Key="LoginNoAccountMatch">登入失敗，無法取得帳號列表。</system:String>
   <system:String x:Key="LoginNoWebtoken">登入失敗，登入後無法取得bfWebToken Cookie。</system:String>
   <system:String x:Key="LoginUnknown">登入失敗，請稍後再試</system:String>
   <system:String x:Key="LoginNoMethod">登入出錯，選擇了不存在的登入方式。</system:String>
-  <system:String x:Key="OTPUnknown">獲取密碼失敗，請嘗試重新登入。</system:String>
   <system:String x:Key="OTPNoCreateTime">獲取帳號創建時間失敗。</system:String>
   <system:String x:Key="OTPNoSecretCode"
     >獲取密碼失敗，未找到SecretCode訊息，請檢查網絡連線。</system:String
   >
   <system:String x:Key="DecryptOTPError">解密密碼失敗。</system:String>
+  <system:String x:Key="OTPNoLaunchTicket"
+    >獲取密碼失敗，無法從啟動資料解析 LaunchTicket。</system:String
+  >
   <system:String x:Key="MainAccount_Not_Exist"
     >此Beanfun帳號不存在，請確認您的Beanfun帳號是否成功註冊，或者確認帳號是否是所在區域為{0}的Beanfun帳號。</system:String
   >
-  <system:String x:Key="LoginInitCaptcha">載入圖形驗證碼失敗。</system:String>
   <system:String x:Key="GetOtpInitError">獲取密碼時初始化失敗，請檢查網路連線。</system:String>
   <system:String x:Key="NeedAuthToPlayGame"
     >很抱歉，需先完成進階認證，才可啟動此款遊戲</system:String
@@ -389,9 +377,6 @@
   <system:String x:Key="MsgGameAlreadyRun"
     >遊戲已經運行,可能是客戶端問題導致未完全結束程序,是否要結束遊戲?</system:String
   >
-  <system:String x:Key="MsgLRDoNotSupportCmd"
-    >以非繁體語係系統啟動64-Bit遊戲的方式不支援非傳統登入模式。</system:String
-  >
   <system:String x:Key="MsgLEDoNotSupportXP"
     >以非繁體語係系統啟動遊戲的方式不支援Windows XP。</system:String
   >
@@ -400,12 +385,6 @@
   >
   <system:String x:Key="MsgLocalePluginReleaseError"
     >釋出區域模擬元件錯誤，請重新啟動電腦後再次嘗試。</system:String
-  >
-  <system:String x:Key="MsgLEError0xC00700C1"
-    >非繁體語係系統啟動遊戲失敗\r\n錯誤碼: {0}\r\n導致這個錯誤的原因可能是因為使用了遊戲的自動更新，導致遊戲損壞了。\r\n\r\n解決方案:\r\n- 如果官方有fix更新檔請下載下來手動更新一下遊戲\r\n- 如果官方沒有fix更新檔或上面方法無法解決請嘗試重新安裝遊戲\r\n</system:String
-  >
-  <system:String x:Key="MsgLEError"
-    >非繁體語係系統啟動遊戲失敗\r\n錯誤碼: {0}\r\n{1}\r\n{2}\r\n如果你有運行任何防毒軟體, 請關閉後再次嘗試。\r\n如果仍然顯示此視窗, 請嘗試以「安全模式」啟動程式。如果你進行了以上的嘗試仍然沒有一個有效，請隨時在後面的連結提交問題\r\nhttps://github.com/xupefei/Locale-Emulator/issues\r\n\r\n\r\n你可以按 CTRL+C 將此訊息複製到你的剪貼板。\r\n</system:String
   >
   <system:String x:Key="MsgBeanfunRejectLogin">您的登入要求已被beanfun! App拒絕。</system:String>
   <system:String x:Key="ClientVersion">客戶端版本:</system:String>
@@ -437,21 +416,8 @@
     >Deeplink 尚未取得，請等待 QR Code 載入完成。</system:String
   >
   <system:String x:Key="AdvanceCheckSuccessRetry">驗證成功！請再次輸入密碼登入遊戲。</system:String>
-  <system:String x:Key="AdvanceCheckAccountAbnormal"
-    >帳號狀態異常，請先使用瀏覽器登入官網確認（可能需聯絡客服）</system:String
-  >
-  <system:String x:Key="AdvanceCheckNoCaptchaId"
-    >無法取得驗證碼編號，帳號可能處於異常狀態</system:String
-  >
-  <system:String x:Key="AdvanceCheckCaptchaLoadFailed"
-    >無法載入驗證碼圖片（Session 可能已過期）</system:String
-  >
-  <system:String x:Key="AdvanceCheckFillEmailAndCaptcha">請填寫 Email 同驗證碼</system:String>
   <system:String x:Key="GamePassLogin">GamePass 登入</system:String>
   <system:String x:Key="AccountLoginTitle">帳號登入 / 驗證</system:String>
-  <system:String x:Key="LoginRecaptchaHint"
-    >系統要求進行「我不是機器人」驗證。請在開啟的視窗中完成驗證並登入。</system:String
-  >
   <system:String x:Key="GamePassWaiting">正在等待 GamePass 認證...</system:String>
   <system:String x:Key="GamePassOpen">開啟 GamePass 登入</system:String>
   <system:String x:Key="SessionKeyFailed">無法取得 SessionKey，請稍後再試</system:String>
@@ -460,11 +426,4 @@
     >系統已成功將您的舊版帳號資料自動升級至新格式！&#x0a;您現在可以正常使用所有帳號。</system:String
   >
   <system:String x:Key="LegacyDataMigrateTitle">資料轉換成功</system:String>
-  <system:String x:Key="AdvanceCheckTitle">進階驗證</system:String>
-  <system:String x:Key="AdvanceCheckHintPrefix">提示：</system:String>
-  <system:String x:Key="AdvanceCheckInputEmail">請輸入認證 Email：</system:String>
-  <system:String x:Key="AdvanceCheckInputPhone">請輸入認證電話號碼：</system:String>
-  <system:String x:Key="AdvanceCheckCaptchaLabel">圖形驗證碼：</system:String>
-  <system:String x:Key="AdvanceCheckConfirm">確定</system:String>
-  <system:String x:Key="AdvanceCheckCancel">取消</system:String>
 </ResourceDictionary>

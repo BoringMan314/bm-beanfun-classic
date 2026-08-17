@@ -37,7 +37,7 @@ namespace Beanfun
     };
 
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// MainWindow.xaml 的互動邏輯
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -114,67 +114,37 @@ namespace Beanfun
             this.checkPlayPage = new System.Windows.Threading.DispatcherTimer();
             this.checkPatcher = new System.Windows.Threading.DispatcherTimer();
             this.bfAPPAutoLogin = new System.Windows.Threading.DispatcherTimer();
-            //
-            // getOtpWorker
-            //
-            this.getOtpWorker.WorkerReportsProgress = true;
+            this.getOtpWorker.WorkerReportsProgress = true; // 取得 OTP
             this.getOtpWorker.WorkerSupportsCancellation = true;
             this.getOtpWorker.DoWork += this.getOtpWorker_DoWork;
             this.getOtpWorker.RunWorkerCompleted += this.getOtpWorker_RunWorkerCompleted;
-            //
-            // loginWorker
-            //
-            this.loginWorker.WorkerReportsProgress = true;
+            this.loginWorker.WorkerReportsProgress = true; // 登入
             this.loginWorker.WorkerSupportsCancellation = true;
             this.loginWorker.DoWork += this.loginWorker_DoWork;
             this.loginWorker.RunWorkerCompleted += this.loginWorker_RunWorkerCompleted;
-            //
-            // totpWorker
-            //
-            this.totpWorker.WorkerReportsProgress = true;
+            this.totpWorker.WorkerReportsProgress = true; // TOTP
             this.totpWorker.WorkerSupportsCancellation = true;
             this.totpWorker.DoWork += this.totpWorker_DoWork;
             this.totpWorker.RunWorkerCompleted += this.totpWorker_RunWorkerCompleted;
-            //
-            // pingWorker
-            //
-            this.pingWorker.WorkerReportsProgress = true;
+            this.pingWorker.WorkerReportsProgress = true; // 連線維持
             this.pingWorker.WorkerSupportsCancellation = true;
             this.pingWorker.DoWork += this.pingWorker_DoWork;
             this.pingWorker.RunWorkerCompleted += this.pingWorker_RunWorkerCompleted;
-            //
-            // qrWorker
-            //
-            this.qrWorker.WorkerReportsProgress = true;
+            this.qrWorker.WorkerReportsProgress = true; // QR 登入
             this.qrWorker.WorkerSupportsCancellation = true;
             this.qrWorker.DoWork += this.qrWorker_DoWork;
             this.qrWorker.RunWorkerCompleted += this.qrWorker_RunWorkerCompleted;
-            //
-            // verifyWorker
-            //
-            this.verifyWorker.WorkerReportsProgress = true;
+            this.verifyWorker.WorkerReportsProgress = true; // 進階驗證
             this.verifyWorker.WorkerSupportsCancellation = true;
             this.verifyWorker.DoWork += this.verifyWorker_DoWork;
             this.verifyWorker.RunWorkerCompleted += this.verifyWorker_RunWorkerCompleted;
-            //
-            // qrCheckLogin
-            //
-            this.qrCheckLogin.Interval = TimeSpan.FromSeconds(2);
+            this.qrCheckLogin.Interval = TimeSpan.FromSeconds(2); // 輪詢 QR 是否掃過
             this.qrCheckLogin.Tick += this.qrCheckLogin_Tick;
-            //
-            // checkPlayPage
-            //
-            this.checkPlayPage.Interval = TimeSpan.FromMilliseconds(100);
+            this.checkPlayPage.Interval = TimeSpan.FromMilliseconds(100); // 關閉遊戲啟動提示頁
             this.checkPlayPage.Tick += this.checkPlayPage_Tick;
-            //
-            // checkPatcher
-            //
-            this.checkPatcher.Interval = TimeSpan.FromMilliseconds(100);
+            this.checkPatcher.Interval = TimeSpan.FromMilliseconds(100); // 攔截遊戲自動更新
             this.checkPatcher.Tick += this.checkPatcher_Tick;
-            //
-            // bfAPPAutoLogin
-            //
-            this.bfAPPAutoLogin.Interval = TimeSpan.FromSeconds(2);
+            this.bfAPPAutoLogin.Interval = TimeSpan.FromSeconds(2); // beanfun App 授權登入
             this.bfAPPAutoLogin.Tick += this.bfAPPAutoLogin_Tick;
 
             loginPage = new LoginPage();
@@ -216,7 +186,6 @@ namespace Beanfun
         protected override void OnContentRendered(EventArgs e)
         {
             frame.Content = loginPage;
-            //frame.Content = loginTotp;
 
             if (
                 App.LoginMethod == (int)LoginMethod.Regular
@@ -256,8 +225,7 @@ namespace Beanfun
             color.A = 0xFF;
             this.BorderBrush = new SolidColorBrush(color);
 
-            // Update theme color resource for ListBox selection
-            Application.Current.Resources["ThemeColorBrush"] = new SolidColorBrush(color);
+            Application.Current.Resources["ThemeColorBrush"] = new SolidColorBrush(color); // ListBox 選取色
             bool isLightMode = isLightColor();
             if (compositor != null)
             {
@@ -322,8 +290,6 @@ namespace Beanfun
                 {
                     ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
                 }
-                // Allow SSL errors for beanfun/gamania domains; fall through for unknown sender types
-                // (e.g. process-mode game accelerators like UU) to preserve backward compatibility
                 ServicePointManager.ServerCertificateValidationCallback = (
                     sender,
                     certificate,
@@ -336,9 +302,9 @@ namespace Beanfun
                     if (sender is HttpWebRequest req)
                     {
                         string host = req.RequestUri.Host;
-                        return host.EndsWith(".beanfun.com") || host.EndsWith(".gamania.com");
+                        return host.EndsWith(".beanfun.com") || host.EndsWith(".gamania.com"); // beanfun／gamania 憑證錯誤放行
                     }
-                    return true;
+                    return true; // 未知 sender（加速器等）放行
                 };
                 if (settingPage.tradLogin != null && !(bool)settingPage.tradLogin.IsChecked)
                     accountList.panel_GetOtp.Visibility = Visibility.Collapsed;
@@ -379,11 +345,10 @@ namespace Beanfun
                 );
                 if (loginMethod < (int)LoginMethod.Regular)
                     loginMethod = int.Parse(ConfigAppSettings.GetValue("loginMethod", "0"));
-                // Don't restore QRCode/GamePass on startup — they require active auth sessions
                 loginMethod = Math.Min(
                     loginMethod,
                     App.LoginRegion == "TW" ? (int)LoginMethod.QRCode : (int)LoginMethod.Regular
-                );
+                ); // 台灣不還原 GamePass；香港僅帳密
 
                 loginMethodInit();
 
@@ -603,7 +568,8 @@ namespace Beanfun
             else
             {
                 settingPage.t_GamePath.Text = ConfigAppSettings.GetValue(
-                    dir_value_name + "." + gameCode
+                    dir_value_name + "." + gameCode,
+                    ""
                 );
             }
 
@@ -776,47 +742,41 @@ namespace Beanfun
         {
             Regex regex;
 
-            // __VIEWSTATE
-            regex = new Regex("id=\"__VIEWSTATE\"[^>]+value=\"([^\"]+)\"");
+            regex = new Regex("id=\"__VIEWSTATE\"[^>]+value=\"([^\"]+)\""); // __VIEWSTATE
             if (!regex.IsMatch(response))
             {
                 return "VerifyNoViewstate";
             }
             this.viewstate = regex.Match(response).Groups[1].Value;
 
-            // __VIEWSTATEGENERATOR (optional but store if present)
-            regex = new Regex("id=\"__VIEWSTATEGENERATOR\"[^>]+value=\"([^\"]+)\"");
+            regex = new Regex("id=\"__VIEWSTATEGENERATOR\"[^>]+value=\"([^\"]+)\""); // __VIEWSTATEGENERATOR（有則存）
             if (regex.IsMatch(response))
             {
                 this.bfClient.verifyViewStateGenerator = regex.Match(response).Groups[1].Value;
             }
 
-            // __EVENTVALIDATION
-            regex = new Regex("id=\"__EVENTVALIDATION\"[^>]+value=\"([^\"]+)\"");
+            regex = new Regex("id=\"__EVENTVALIDATION\"[^>]+value=\"([^\"]+)\""); // __EVENTVALIDATION
             if (!regex.IsMatch(response))
             {
                 return "VerifyNoEventvalidation";
             }
             this.eventvalidation = regex.Match(response).Groups[1].Value;
 
-            // Captcha ID
-            regex = new Regex("id=\"LBD_VCID_[^\"]+\"[^>]+value=\"([^\"]+)\"");
+            regex = new Regex("id=\"LBD_VCID_[^\"]+\"[^>]+value=\"([^\"]+)\""); // 驗證碼識別
             if (!regex.IsMatch(response))
             {
                 return "VerifyNoSamplecaptcha";
             }
             this.samplecaptcha = regex.Match(response).Groups[1].Value;
 
-            // Auth type label
-            regex = new Regex("id=\"lblAuthType\">([^<]+)<");
+            regex = new Regex("id=\"lblAuthType\">([^<]+)<"); // 驗證類型文字
             if (!regex.IsMatch(response))
             {
                 return "VerifyNoLblAuthType";
             }
             verifyPage.labelAuthType.Content = regex.Match(response).Groups[1].Value;
 
-            // Form action URL (store for submit)
-            regex = new Regex("action=\"(AdvanceCheck\\.aspx[^\"]+)\"");
+            regex = new Regex("action=\"(AdvanceCheck\\.aspx[^\"]+)\""); // 表單送出網址
             if (regex.IsMatch(response))
             {
                 string formAction = regex.Match(response).Groups[1].Value.Replace("&amp;", "&");
@@ -824,8 +784,7 @@ namespace Beanfun
                     $"https://tw.newlogin.beanfun.com/LoginCheck/{formAction}";
             }
 
-            // Alert check
-            regex = new Regex("alert\\('(.*)'\\);");
+            regex = new Regex("alert\\('(.*)'\\);"); // 頁面 alert 訊息
             if (regex.IsMatch(response))
             {
                 return regex.Match(response).Groups[1].Value;
@@ -1451,12 +1410,8 @@ namespace Beanfun
             }
         }
 
-        // Login do work.
-        private void loginWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void loginWorker_DoWork(object sender, DoWorkEventArgs e) // 登入背景工作
         {
-            //if (this.pingWorker.IsBusy) this.pingWorker.CancelAsync();
-            // while (this.pingWorker.IsBusy)
-            //    Thread.Sleep(137);
             CancelWork();
 
             Console.WriteLine("loginWorker starting");
@@ -1499,8 +1454,7 @@ namespace Beanfun
             ResumeWork();
         }
 
-        // Login completed.
-        private void loginWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void loginWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // 登入完成
         {
             Console.WriteLine("loginWorker end");
             if (e != null && e.Error != null)
@@ -1547,8 +1501,7 @@ namespace Beanfun
                 {
                     MessageBox.Show(TryFindResource("MsgNeedAuth") as string);
 
-                    // Handle panel switching.
-                    frame.Content = verifyPage;
+                    frame.Content = verifyPage; // 切到進階驗證頁
                     if ((bool)verifyPage.checkBoxRememberVerify.IsChecked)
                         verifyPage.t_Code.Focus();
                     else
@@ -1596,12 +1549,8 @@ namespace Beanfun
             OnLoginCompleted();
         }
 
-        // totp do work.
-        private void totpWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void totpWorker_DoWork(object sender, DoWorkEventArgs e) // TOTP 背景工作
         {
-            //if (this.pingWorker.IsBusy) this.pingWorker.CancelAsync();
-            // while (this.pingWorker.IsBusy)
-            //    Thread.Sleep(137);
             CancelWork();
 
             Console.WriteLine("loginWorker starting");
@@ -1644,8 +1593,7 @@ namespace Beanfun
             ResumeWork();
         }
 
-        // Login completed.
-        private void totpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void totpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // TOTP 完成
         {
             Console.WriteLine("loginWorker end");
             if (e != null && e.Error != null)
@@ -1660,8 +1608,7 @@ namespace Beanfun
                 {
                     MessageBox.Show(TryFindResource("MsgNeedAuth") as string);
 
-                    // Handle panel switching.
-                    frame.Content = verifyPage;
+                    frame.Content = verifyPage; // 切到進階驗證頁
                     if ((bool)verifyPage.checkBoxRememberVerify.IsChecked)
                         verifyPage.t_Code.Focus();
                     else
@@ -1764,19 +1711,15 @@ namespace Beanfun
                 accountList.list_Account.SelectedIndex = 0;
 
                 accountList.m_CopyAccount.Visibility = Visibility.Visible;
-                //accountList.m_ChangeAccName.Visibility = !UnconnectedGame || App.LoginRegion != "TW" ? Visibility.Visible : Visibility.Collapsed;
                 accountList.m_ChangePassword.Visibility = UnconnectedGame
                     ? Visibility.Visible
                     : Visibility.Collapsed;
-                //accountList.m_AccInfo.Visibility = !UnconnectedGame || App.LoginRegion != "TW" ? Visibility.Visible : Visibility.Collapsed;
                 accountList.s_Account.Visibility = Visibility.Visible;
             }
             else
             {
                 accountList.m_CopyAccount.Visibility = Visibility.Collapsed;
-                //accountList.m_ChangeAccName.Visibility = Visibility.Collapsed;
                 accountList.m_ChangePassword.Visibility = Visibility.Collapsed;
-                //accountList.m_AccInfo.Visibility = Visibility.Collapsed;
                 accountList.s_Account.Visibility = Visibility.Collapsed;
             }
             accountList.m_GetEmail.Visibility = visable;
@@ -2162,8 +2105,7 @@ namespace Beanfun
             return this.bfClient.GetServiceContract(service_code, service_region);
         }
 
-        // getOTP do work.
-        private void getOtpWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void getOtpWorker_DoWork(object sender, DoWorkEventArgs e) // 取得 OTP 背景工作
         {
             CancelWork();
 
@@ -2201,8 +2143,7 @@ namespace Beanfun
             return;
         }
 
-        // getOTP completed.
-        private void getOtpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void getOtpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // 取得 OTP 完成
         {
             accountList.btnGetOtp.Content = TryFindResource("GetOtp") as string;
             if (e.Error != null)
@@ -2268,11 +2209,9 @@ namespace Beanfun
                                 Thread.Sleep(100);
                                 if ("610074".Equals(service_code) && "T9".Equals(service_region))
                                 {
-                                    // 按下ESC關閉提示框
-                                    WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_ESCAPE);
+                                    WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_ESCAPE); // 關閉提示框
                                     Thread.Sleep(100);
-                                    // 選中帳號欄
-                                    System.Drawing.Point oldPoint = new System.Drawing.Point(0, 0);
+                                    System.Drawing.Point oldPoint = new System.Drawing.Point(0, 0); // 選中帳號欄
                                     WindowsAPI.GetCursorPos(ref oldPoint);
                                     System.Drawing.Point point = new System.Drawing.Point(0, 0);
                                     WindowsAPI.ClientToScreen(hWnd, ref point);
@@ -2289,26 +2228,20 @@ namespace Beanfun
                                     Thread.Sleep(200);
                                     WindowsAPI.SetCursorPos(oldPoint.X, oldPoint.Y);
                                 }
-                                // 清空帳號欄內容
-                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_END);
+                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_END); // 清空帳號欄
                                 for (int i = 0; i < 64; i++)
                                 {
                                     WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_BACK);
                                 }
-                                // 輸入帳號
-                                WindowsAPI.PostString(hWnd, acc);
-                                // 切換到密碼欄
-                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_TAB);
-                                // 清空密碼欄內容
-                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_END);
+                                WindowsAPI.PostString(hWnd, acc); // 輸入帳號
+                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_TAB); // 切到密碼欄
+                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_END); // 清空密碼欄
                                 for (int i = 0; i < 20; i++)
                                 {
                                     WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_BACK);
                                 }
-                                // 輸入密碼
-                                WindowsAPI.PostString(hWnd, accountList.t_Password.Text);
-                                // 按登入
-                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_ENTER);
+                                WindowsAPI.PostString(hWnd, accountList.t_Password.Text); // 輸入密碼
+                                WindowsAPI.PostKey(hWnd, WM_KEYDOWN, VK_ENTER); // 按登入
                             }
                         }
                     }
@@ -2358,12 +2291,11 @@ namespace Beanfun
             timer.Start();
         }
 
-        // Ping to Beanfun website.
-        private void pingWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void pingWorker_DoWork(object sender, DoWorkEventArgs e) // 定期連線 beanfun
         {
             Thread.CurrentThread.Name = "ping Worker";
             Console.WriteLine("pingWorker start");
-            const int WaitSecs = 60; // 1min
+            const int WaitSecs = 60; // 間隔 60 秒
 
             while (!isCancelRequested)
             {
@@ -2591,15 +2523,13 @@ namespace Beanfun
                 string SrvMapleMinor = "";
                 try
                 {
-                    // 獲取客戶端版本
-                    FileVersionInfo fileVerInfo = FileVersionInfo.GetVersionInfo(
+                    FileVersionInfo fileVerInfo = FileVersionInfo.GetVersionInfo( // 客戶端版本
                         settingPage.t_GamePath.Text
                     );
                     ClientMapleMajor = (short)fileVerInfo.ProductMinorPart;
                     ClientMapleMinor = (short)fileVerInfo.FileBuildPart;
 
-                    // 獲取伺服器版本
-                    CancellationTokenSource c = new CancellationTokenSource();
+                    CancellationTokenSource c = new CancellationTokenSource(); // 伺服器版本
                     CancellationToken token = c.Token;
                     byte[] Data = null;
                     System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(

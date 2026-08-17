@@ -12,8 +12,7 @@ namespace Beanfun
 {
     public partial class BeanfunClient : WebClient
     {
-        // Stored from getVerifyPageInfo HTML parsing
-        public string verifyFormAction;
+        public string verifyFormAction; // 由驗證頁 HTML 解析
         public string verifyViewStateGenerator;
 
         public string getVerifyPageInfo()

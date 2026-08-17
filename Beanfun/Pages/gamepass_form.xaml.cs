@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace Beanfun
 {
     /// <summary>
-    /// gamepass_form.xaml 的交互逻辑
+    /// gamepass_form.xaml 的互動邏輯
     /// </summary>
     public partial class gamepass_form : Page
     {

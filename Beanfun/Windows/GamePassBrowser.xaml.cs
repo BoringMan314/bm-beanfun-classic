@@ -29,8 +29,7 @@ namespace Beanfun
         {
             if (!_loginCompleted)
             {
-                // User closed window without completing login, reset bfClient
-                App.MainWnd.bfClient = null;
+                App.MainWnd.bfClient = null; // 未登入完成就關窗，重設用戶端
             }
         }
 
@@ -88,8 +87,7 @@ namespace Beanfun
         {
             string url = wb_Main.Source?.ToString() ?? "";
 
-            // Auto-click GamePass button on login page
-            if (!_hasClickedGamePass && url.Contains("Login/Index"))
+            if (!_hasClickedGamePass && url.Contains("Login/Index")) // 登入頁自動點 GamePass
             {
                 _hasClickedGamePass = true;
                 await wb_Main.CoreWebView2.ExecuteScriptAsync(
@@ -101,12 +99,9 @@ namespace Beanfun
                 return;
             }
 
-            // Show window once past login page
             if (_hasClickedGamePass && !url.Contains("Login/Index"))
-                this.Opacity = 1;
+                this.Opacity = 1; // 離開登入頁才顯示視窗
 
-            // After callback completes, beanfun redirects to SendLogin then return.aspx
-            // Check if we've landed back on beanfun with bfWebToken cookie set
             if (
                 url.Contains("beanfun.com")
                 && (
@@ -114,7 +109,7 @@ namespace Beanfun
                     || url.Contains("index.aspx")
                     || url.Contains("SendLogin")
                 )
-            )
+            ) // 回到 beanfun 且已有 bfWebToken
             {
                 await TryCompleteLogin();
             }
@@ -147,8 +142,7 @@ namespace Beanfun
                 if (string.IsNullOrEmpty(webToken))
                     return;
 
-                // Convert WebView2 cookies to System.Net.Cookie for BeanfunClient
-                var allCookies = new System.Collections.Generic.List<Cookie>();
+                var allCookies = new System.Collections.Generic.List<Cookie>(); // WebView2 cookie 轉成 System.Net.Cookie
                 ConvertCookies(twCookies, allCookies);
                 ConvertCookies(loginCookies, allCookies);
                 ConvertCookies(newLoginCookies, allCookies);

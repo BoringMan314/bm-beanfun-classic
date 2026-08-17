@@ -1,11 +1,11 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Beanfun
 {
     /// <summary>
-    /// UnconnectedGame_ChangePassword.xaml 的交互逻辑
+    /// UnconnectedGame_ChangePassword.xaml 的互動邏輯
     /// </summary>
     public partial class UnconnectedGame_ChangePassword : Window
     {

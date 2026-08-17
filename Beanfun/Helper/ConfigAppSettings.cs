@@ -61,11 +61,6 @@ namespace Beanfun
             }
         }
 
-        public static string GetValue(string key)
-        {
-            return GetValue(key, string.Empty);
-        }
-
         public static string GetValue(string key, string def)
         {
             string value;
