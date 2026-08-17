@@ -1,6 +1,6 @@
 # Beanfun 經典 UI — 舊版介面維護分支
 
-[![GitHub all releases](https://img.shields.io/github/downloads/BoringMan314/bm-beanfun-classic/total)](https://github.com/BoringMan314/bm-beanfun-classic/releases)
+[![全版本總下載量](https://img.shields.io/github/downloads/BoringMan314/bm-beanfun-classic/total?label=全版本總下載量)](https://github.com/BoringMan314/bm-beanfun-classic/releases)
 
 >  **遊戲橘子數位科技旗下遊戲的第三方啟動器**
 
