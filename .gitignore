@@ -279,3 +279,8 @@ Beanfun/LRSubMenus.dll
 
 # Local scripts
 sync-upstream.ps1
+
+*.cul
+
+*.url
+*.zip
