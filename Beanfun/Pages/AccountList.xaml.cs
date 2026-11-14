@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -74,7 +76,22 @@ namespace Beanfun
             if (bool.Parse(ConfigAppSettings.GetValue("autoPaste", "false")) == autoPaste.IsChecked)
                 return;
             if (ConfigAppSettings.GetValue("autoPaste", "") == "")
-                MessageBox.Show(TryFindResource("AutoPasteTip") as string);
+            {
+                TextBlock tip = TryFindResource("AutoPasteTip") as TextBlock;
+                if (tip != null)
+                {
+                    StringBuilder tipText = new StringBuilder();
+                    foreach (Inline inline in tip.Inlines)
+                    {
+                        if (inline is Run run)
+                            tipText.Append(run.Text);
+                        else if (inline is LineBreak)
+                            tipText.AppendLine();
+                    }
+
+                    MessageBox.Show(tipText.ToString());
+                }
+            }
             ConfigAppSettings.SetValue("autoPaste", Convert.ToString(autoPaste.IsChecked));
         }
 

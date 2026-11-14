@@ -14,16 +14,22 @@ taskkill /F /IM "%EXE_NAME%" /T >nul 2>&1
 if not exist "dist" mkdir "dist" 2>nul
 call :clean_dir_contents "dist"
 
-where dotnet >nul 2>&1
-if errorlevel 1 (
+set "DOTNET_EXE="
+if exist "%LOCALAPPDATA%\Programs\dotnet\dotnet.exe" (
+  set "DOTNET_EXE=%LOCALAPPDATA%\Programs\dotnet\dotnet.exe"
+  set "DOTNET_CLI_HOME=%LOCALAPPDATA%\Programs\dotnet\.cli-home"
+  set "NUGET_PACKAGES=%LOCALAPPDATA%\Programs\dotnet\.nuget\packages"
+)
+if not defined DOTNET_EXE for %%I in (dotnet.exe) do set "DOTNET_EXE=%%~$PATH:I"
+if not defined DOTNET_EXE (
   echo [build_win10] FAIL: dotnet SDK not found in PATH
   goto :end_fail
 )
 
 echo [build_win10] using:
-dotnet --version
+"%DOTNET_EXE%" --version
 
-dotnet restore "%SLN%"
+"%DOTNET_EXE%" restore "%SLN%"
 if errorlevel 1 (
   echo [build_win10] FAIL: dotnet restore
   goto :end_fail
@@ -31,7 +37,7 @@ if errorlevel 1 (
 
 rem Match .github/workflows/build-and-release.yml publish settings
 rem Use trailing / inside quotes - CMD treats \" at end of path as escaped quote and breaks -o
-dotnet publish "%CSPROJ%" -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=none -o "%OUT_DIR%"
+"%DOTNET_EXE%" publish "%CSPROJ%" -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=none -o "%OUT_DIR%"
 if errorlevel 1 (
   echo [build_win10] FAIL: dotnet publish
   goto :end_fail

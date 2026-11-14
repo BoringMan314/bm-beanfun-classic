@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)] // 不對 COM 公開
 [assembly: Guid("24238732-c686-4921-9f1c-5159a4344638")] // COM 類型庫識別碼
-[assembly: AssemblyVersion("5.9.2.2")]
-[assembly: AssemblyFileVersion("5.9.2.2")]
+[assembly: AssemblyVersion("5.9.2.3")]
+[assembly: AssemblyFileVersion("5.9.2.3")]
 [assembly: NeutralResourcesLanguage("zh-Hant")]
-[assembly: System.Reflection.AssemblyInformationalVersion("5.9.2.2")]
+[assembly: System.Reflection.AssemblyInformationalVersion("5.9.2.3")]
